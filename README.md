@@ -1,2 +1,1 @@
-# PyLot
-![screenshot](pylotlogo.PNG)
+# ![screenshot](pylotlogo.PNG)
