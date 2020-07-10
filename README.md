@@ -1,2 +1,2 @@
 # PyLot
-![screenshot](horsebbscrrenshot.PNG)
+![screenshot](pylotlogo.PNG)
