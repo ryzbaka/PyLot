@@ -3,7 +3,7 @@
 ## Contributors
 * Hamza
 * Mathew Pius
-* Arihant Chawla
+* Arihant Chawla *
 * Deekshant Hooda
 * Naman Gupta
 
