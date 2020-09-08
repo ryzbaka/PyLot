@@ -1,10 +1,10 @@
 import React from "react";
 import Apitest from "./Apitest";
+import Sidebar from "./Sidebar";
 const App = () => {
   return (
-    <div>
-      <h1>PyLot</h1>
-      <Apitest />
+    <div className='main-container'>
+      <Sidebar options={['Home','About','Sign Up / Sign In',]}/>
     </div>
   );
 };
