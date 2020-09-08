@@ -34,7 +34,12 @@ html,body{
   align-items: center;
   height:100%;
   font-family: monospace;
-  font-size: 200%;
+  font-size: 100%;
+}
+.side-container-content{
+ display:flex;
+ align-items:center;
+ flex-direction: column; 
 }
 .nested-main-container{
   background:#c2d3dd;

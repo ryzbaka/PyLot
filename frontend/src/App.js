@@ -1,5 +1,4 @@
 import React from "react";
-import Apitest from "./Apitest";
 import Sidebar from "./Sidebar";
 import { Router } from "@reach/router";
 import Home from "./Home";
@@ -10,10 +9,25 @@ const App = () => {
   return (
     <React.StrictMode>
       <div className="main-container">
-        <Sidebar
-          options={["Home", "About", "Sign Up / Sign In"]}
-          links={["/", "/about", "/signupin"]}
-        />
+        <div className="side-container">
+          <Router>
+            <Sidebar
+              options={["Home", "About"]}
+              links={["/", "/about"]}
+              path="/signupin"
+            />
+            <Sidebar
+              options={["Home", "Sign Up / Sign In"]}
+              links={["/", "/signupin"]}
+              path="/about"
+            />
+            <Sidebar
+              options={["Home", "About", "Sign Up / Sign In"]}
+              links={["/", "/about", "/signupin"]}
+              path="/*"
+            />
+          </Router>
+        </div>
         <div className="nested-main-container">
           <Router>
             <Home path="/" />
