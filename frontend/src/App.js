@@ -22,9 +22,9 @@ const App = () => {
               path="/about"
             />
             <Sidebar
-              options={["Home", "About", "Sign Up / Sign In"]}
-              links={["/", "/about", "/signupin"]}
-              path="/*"
+              options={["About", "Sign Up / Sign In"]}
+              links={["/about", "/signupin"]}
+              path="/"
             />
           </Router>
         </div>
