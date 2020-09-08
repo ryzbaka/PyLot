@@ -21,6 +21,8 @@ html,body{
   padding:0;
   margin-top:0px;
   margin-top:0px;
+  display: flex;
+  flex-direction: row;
 }
 .side-container{
   background:#4C5357;
@@ -33,4 +35,9 @@ html,body{
   height:100%;
   font-family: monospace;
   font-size: 200%;
+}
+.nested-main-container{
+  background:#c2d3dd;
+  width:85%;
+  margin-right:-20px;
 }
