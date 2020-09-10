@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "@reach/router";
 
-const Signupin = () => {
-  const [username, setUsername] = useState("username");
-  const [password, setPassword] = useState("*******");
-  async function verifyDetails() {
-    console.log(username);
-    console.log(password);
-    //write code here for verifying details with mongoDB tables.
+const Signup = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  function verifyDetails() {
+    if (password !== password2) {
+      alert("Passwords do not match.");
+    }
   }
   return (
     <div className="form-container">
@@ -34,13 +34,18 @@ const Signupin = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </label>
+        <label htmlFor="password2">
+          <input
+            id="password2"
+            placeholder="retype password"
+            type="password"
+            value={password2}
+            onChange={(event) => setPassword2(event.target.value)}
+          />
+        </label>
         <button>submit</button>
-        <Link to="/signup" style={{ textDecoration: "none", color: "#4c5357" }}>
-          Sign Up
-        </Link>
       </form>
     </div>
   );
 };
-
-export default Signupin;
+export default Signup;
