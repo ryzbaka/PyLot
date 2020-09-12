@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "@reach/router";
 import axios from "axios";
-
+import SignInContext from "./SignInContext";
 const Signupin = () => {
   const [username, setUsername] = useState("username");
   const [password, setPassword] = useState("*******");
+  const [signInState,setSignInState] = useContext(SignInContext); 
   function verifyDetails() {
     if (username === "" || password === "") {
       alert("Form missing information.");
@@ -15,7 +16,11 @@ const Signupin = () => {
       };
       axios
         .post("/users/signin", formData)
-        .then((response) => alert(response.data));
+        .then((response) => {
+          if(response.data==="Authentication Successful"){
+              setSignInState(username);
+          }
+        });
     }
   }
   return (

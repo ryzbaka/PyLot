@@ -1,6 +1,8 @@
-import React from "react";
+import React, {useContext} from "react";
+import SignInContext from "./SignInContext";
 
 const Home = () => {
-  return <div>Home</div>;
+  const [signInState,setsignInState] = useContext(SignInContext); 
+  return <div>{signInState}</div>;
 };
 export default Home;

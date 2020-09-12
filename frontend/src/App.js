@@ -1,14 +1,17 @@
-import React from "react";
+import React,{useState} from "react";
 import Sidebar from "./Sidebar";
 import { Router } from "@reach/router";
 import Home from "./Home";
 import About from "./About";
 import Signupin from "./Signupin";
 import Signup from "./Signup";
+import SignInContext from "./SignInContext";
 
 const App = () => {
+  const signedStateHook = useState("signed out");
   return (
     <React.StrictMode>
+      <SignInContext.Provider value={signedStateHook}>
       <div className="main-container">
         <div className="side-container">
           <Router>
@@ -34,6 +37,7 @@ const App = () => {
           </Router>
         </div>
       </div>
+      </SignInContext.Provider>
     </React.StrictMode>
   );
 };
