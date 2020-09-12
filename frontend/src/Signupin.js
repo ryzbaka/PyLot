@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "@reach/router";
+import axios from "axios";
 
 const Signupin = () => {
   const [username, setUsername] = useState("username");
   const [password, setPassword] = useState("*******");
-  async function verifyDetails() {
-    console.log(username);
-    console.log(password);
-    //write code here for verifying details with mongoDB tables.
+  function verifyDetails() {
+    if (username === "" || password === "") {
+      alert("Form missing information.");
+    } else {
+      const formData = {
+        username: username,
+        password: password,
+      };
+      axios
+        .post("/users/signin", formData)
+        .then((response) => alert(response.data));
+    }
   }
   return (
     <div className="form-container">

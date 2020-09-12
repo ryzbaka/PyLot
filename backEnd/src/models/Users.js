@@ -17,6 +17,10 @@ const UsersSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    requires: true,
+  },
   servers: [
     {
       serverName: {

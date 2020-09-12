@@ -10,10 +10,10 @@ const port = 5555;
 app.use(bodyParser.json());
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 
-//~~DB Operations~~
+//~~DB OPERATIONS~~
 app.post(
   "/users/signup",
-  async ({ body: { firstName, lastName, username, password } }, res) => {
+  async ({ body: { firstName, lastName, username, password, email } }, res) => {
     User.findOne({ username: username }, "username").then((resultant) => {
       if (resultant) {
         res.send("Username already exists!");
@@ -25,6 +25,7 @@ app.post(
               lastName: lastName,
               username: username,
               hash: hash,
+              email: email,
               servers: [],
             });
             newUser
@@ -47,7 +48,7 @@ app.post("/users/signin", ({ body: { username, password } }, res) => {
     })
     .catch((err) => res.send(err));
 });
-
+//~~END OF DB OPERATIONS
 mongoose
   .connect(
     process.env.DB_CONNECTION, //environment variable
