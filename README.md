@@ -1,7 +1,7 @@
 # ![screenshot](pylotlogo.PNG)
 
 ## Contributors
-* Hamza
+* Hamza Ali Rizvi
 * Mathew Pius
 * Arihant Chawla
 * Deekshant Hooda
