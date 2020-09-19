@@ -48,6 +48,28 @@ app.post("/users/signin", ({ body: { username, password } }, res) => {
     })
     .catch((err) => res.send(err));
 });
+
+app.post(
+  "/users/addserver",
+  ({ body: { username, serverName, ipAddr, sshKey, password } }, res) => {
+    User.findOne({ username: username }).exec((err, resultant) => {
+      if (err) {
+        throw err;
+      } else {
+        resultant.servers.push({
+          serverName: serverName,
+          ipAddr: ipAddr,
+          sshKey: sshKey,
+          password: password,
+        });
+        console.log(resultant);
+        resultant.save();
+        res.send("UPDATED");
+        //add functionality for ensuring unique servernames.
+      }
+    });
+  }
+);
 //~~END OF DB OPERATIONS
 mongoose
   .connect(
