@@ -55,21 +55,70 @@ app.post(
     User.findOne({ username: username }).exec((err, resultant) => {
       if (err) {
         throw err;
+        res.send("An error occurred.");
       } else {
-        resultant.servers.push({
-          serverName: serverName,
-          ipAddr: ipAddr,
-          sshKey: sshKey,
-          password: password,
-        });
-        console.log(resultant);
-        resultant.save();
-        res.send("UPDATED");
-        //add functionality for ensuring unique servernames.
+        if (resultant) {
+          if (resultant.servers.length === 0) {
+            resultant.servers.push({
+              serverName: serverName,
+              ipAddr: ipAddr,
+              sshKey: sshKey,
+              password: password,
+            });
+            resultant.save();
+            res.send("Added user's first server!");
+          } else {
+            const checkNameAvailable = (server) =>
+              server.serverName === serverName;
+            const nameNotAvailable = resultant.servers
+              .map(checkNameAvailable)
+              .some((el) => el === true);
+            if (nameNotAvailable) {
+              res.send(
+                "Server with that name already exists. Did not add server."
+              );
+            } else {
+              const newServer = {
+                serverName: serverName,
+                ipAddr: ipAddr,
+                sshKey: sshKey,
+                password: password,
+              };
+              resultant.servers.push(newServer);
+              resultant.save();
+              res.send("Added server.");
+            }
+            //addpasswordencryption
+          }
+        } else {
+          res.send("User not found. Failed to add server.");
+        }
       }
     });
   }
 );
+
+app.post("/users/removeserver", ({ body: { username, serverName } }, res) => {
+  User.findOne({ username: username }).exec((err, resultant) => {
+    if (err) {
+      res.send("An error ocurred");
+    } else {
+      const serverExists = resultant.servers
+        .map((el) => el.serverName === serverName)
+        .some((el) => el === true);
+      if (serverExists) {
+        const serverIndex = resultant.servers
+          .map((el) => el.serverName === serverName)
+          .indexOf(true);
+        resultant.servers.splice(serverIndex, 1);
+        resultant.save();
+        res.send(`Server : ${serverName} was deleted successfully.`);
+      } else {
+        res.send("Server with that name does not exist.");
+      }
+    }
+  });
+});
 //~~END OF DB OPERATIONS
 mongoose
   .connect(
