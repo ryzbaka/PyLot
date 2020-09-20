@@ -23,7 +23,7 @@
   * Path : `/users/addserver`
   * Params :
     * <strong>username</strong> : Username (String).
-    * <strong>serverName</strong> : Server's name (String) [**A user cannot have multiple servers with the same name**].
+    * <strong>serverName</strong> : Server's name (String) [A user cannot have multiple servers with the same name].
     * <strong>ipAddr</strong> : Server IP address.
     * <strong>sshKey</strong> : Password field contains SSH Key (Boolean).
     * <strong>password</strong> : Server password (String).
