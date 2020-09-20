@@ -18,6 +18,7 @@
   email: "john.doe@snailmail.com
 }
 ```
+
 #### Add Server [POST]
   * Path : `/users/addserver`
   * Params :
@@ -26,7 +27,7 @@
     * <strong>ipAddr</strong> : Server IP address.
     * <strong>sshKey</strong> : Password field contains SSH Key (Boolean).
     * <strong>password</strong> : Server password (String).
-```javascript
+```
 Example
 {
   username: "johndoe123",
@@ -42,7 +43,7 @@ Example
   * Params :
     * <strong>username</strong> : Username (String).
     * <strong>serverName</strong> : Server Name (String).
-```javascript
+```
 Example
 {
   username: "johndoe123",
