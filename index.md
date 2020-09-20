@@ -50,6 +50,7 @@ Example
   serverName: "server-1",
 }
 ```
+
 #### Fetch Servers [POST]
   * Path : `/users/getservers`
   * Params :
