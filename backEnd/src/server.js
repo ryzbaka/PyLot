@@ -44,7 +44,7 @@ app.post(
 );
 //================================================================================================================================================================================
 //================================================================================================================================================================================
-app.post("/users/signin", ({ body: { username, password } }, res) => {
+/*app.post("/users/signin", ({ body: { username, password } }, res) => {
   User.findOne({ username: username }, "username hash")
     .then(async ({ hash }) => {
       const result = await bcrypt.compare(password, hash);
@@ -52,7 +52,24 @@ app.post("/users/signin", ({ body: { username, password } }, res) => {
         ? res.send("Authentication Successful")
         : res.send("Authenication Failed");
     })
-    .catch((err) => res.send(err));
+    .catch((err) => res.send(err));    REMOVE THIS COMMENTED CODE ONCE VERIFIED FRONTEND FUNCTIONALITY.
+});*/
+app.post("/users/signin", ({ body: { username, password } }, res) => {
+  User.findOne({ username: username }, "username hash").exec(
+    async (err, result) => {
+      if (result) {
+        const { hash, servers } = result;
+        const authenticationSuccessful = await bcrypt.compare(password, hash);
+        if (authenticationSuccessful) {
+          res.send("Authentication Successful");
+        } else {
+          res.send("Authentication Failed");
+        }
+      } else {
+        res.send("Authentication Failed");
+      }
+    }
+  );
 });
 //================================================================================================================================================================================
 //================================================================================================================================================================================
@@ -123,6 +140,27 @@ app.post("/users/removeserver", ({ body: { username, serverName } }, res) => {
         res.send(`Server : ${serverName} was deleted successfully.`);
       } else {
         res.send("Server with that name does not exist.");
+      }
+    }
+  });
+});
+//================================================================================================================================================================================
+//================================================================================================================================================================================
+app.post("/users/getservers", ({ body: { username, password } }, res) => {
+  User.findOne({ username: username }).exec(async (err, resultant) => {
+    if (err) {
+      res.send("An error ocurred.");
+    } else {
+      if (resultant) {
+        const { hash, servers } = resultant;
+        const authenticationSuccessful = await bcrypt.compare(password, hash);
+        if (authenticationSuccessful) {
+          res.send(servers);
+        } else {
+          res.send("Authentication failed. Did not retrieve servers.");
+        }
+      } else {
+        res.send("Authentication failed. Did not retrieve servers.");
       }
     }
   });
