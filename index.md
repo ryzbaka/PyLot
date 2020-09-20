@@ -10,7 +10,6 @@
     * <strong>password</strong> : Password (String).
     * <strong>email</strong> : User's email address (String).
 ```javascript
-Example
 {
   firstName: "John",
   lastName: "Doe",
