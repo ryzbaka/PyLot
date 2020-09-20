@@ -50,3 +50,15 @@ Example
   serverName: "server-1",
 }
 ```
+#### Fetch Servers [POST]
+  * Path : `/users/getservers`
+  * Params :
+    * <strong>username</strong> : Username (String).
+    * <strong>password</strong> : Server Name (String).
+```
+Example
+{
+  username: "johndoe123",
+  serverName: "testpass",
+}
+```
