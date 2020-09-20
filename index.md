@@ -9,7 +9,7 @@
     * <strong>username</strong> : Username (String).
     * <strong>password</strong> : Password (String).
     * <strong>email</strong> : User's email address (String).
-```javascript
+```
 {
   firstName: "John",
   lastName: "Doe",
