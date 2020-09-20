@@ -55,11 +55,11 @@ Example
   * Path : `/users/getservers`
   * Params :
     * <strong>username</strong> : Username (String).
-    * <strong>password</strong> : Server Name (String).
+    * <strong>password</strong> : Password (String).
 ```
 Example
 {
   username: "johndoe123",
-  serverName: "testpass",
+  password: "testpass",
 }
 ```
