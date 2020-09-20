@@ -51,7 +51,7 @@ Example
 }
 ```
 
-#### Fetch Servers [POST]
+#### Fetchs Servers [POST]
   * Path : `/users/getservers`
   * Params :
     * <strong>username</strong> : Username (String).
