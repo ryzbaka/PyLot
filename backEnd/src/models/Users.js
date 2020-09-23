@@ -23,6 +23,9 @@ const UsersSchema = mongoose.Schema({
   },
   servers: [
     {
+      user: {
+        type: String,
+      },
       serverName: {
         type: String,
       },

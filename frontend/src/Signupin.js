@@ -19,6 +19,8 @@ const Signupin = () => {
         .then((response) => {
           if(response.data==="Authentication Successful"){
               setSignInState(username);
+          }else{
+            alert("Authentication failed.")
           }
         });
     }

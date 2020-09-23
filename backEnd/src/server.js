@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const User = require("./models/Users");
+const { Client } = require("ssh2");
 const port = 5555;
 
 app.use(bodyParser.json());
@@ -75,7 +76,7 @@ app.post("/users/signin", ({ body: { username, password } }, res) => {
 //================================================================================================================================================================================
 app.post(
   "/users/addserver",
-  ({ body: { username, serverName, ipAddr, sshKey, password } }, res) => {
+  ({ body: { username, user, serverName, ipAddr, sshKey, password } }, res) => {
     User.findOne({ username: username }).exec((err, resultant) => {
       if (err) {
         throw err;
@@ -84,6 +85,7 @@ app.post(
         if (resultant) {
           if (resultant.servers.length === 0) {
             resultant.servers.push({
+              user: user,
               serverName: serverName,
               ipAddr: ipAddr,
               sshKey: sshKey,
@@ -107,12 +109,13 @@ app.post(
                 ipAddr: ipAddr,
                 sshKey: sshKey,
                 password: password,
+                user: user,
               };
               resultant.servers.push(newServer);
               resultant.save();
               res.send("Added server.");
             }
-            //addpasswordencryption
+            //addpasswordencryption for server passwords
           }
         } else {
           res.send("User not found. Failed to add server.");
@@ -165,6 +168,68 @@ app.post("/users/getservers", ({ body: { username, password } }, res) => {
     }
   });
 });
+//================================================================================================================================================================================
+//================================================================================================================================================================================
+app.post(
+  "/health/setupserver",
+  ({ body: { username, password, serverName } }, res) => {
+    User.findOne({ username: username }).exec(async (err, resultant) => {
+      if (resultant) {
+        const { servers, hash } = resultant;
+        const authenticationSuccessful = await bcrypt.compare(password, hash);
+        if (authenticationSuccessful) {
+          const serverIndex = servers
+            .map((el, index) => el.serverName === serverName)
+            .indexOf(true);
+          const { user, password, ipAddr } = servers[serverIndex];
+          const command = await sshInit(user, password, ipAddr, res);
+        } else {
+          res.send("Authentication failed.");
+        }
+      } else {
+        res.send("User not found.");
+      }
+    });
+  }
+);
+//================================================================================================================================================================================
+//================================================================================================================================================================================
+async function sshInit(username, password, host, res) {
+  const connectionDetails = {
+    host: host,
+    port: 22,
+    username: username,
+    password: password,
+  };
+  const conn = new Client();
+  let log = "";
+  conn.on("ready", () => {
+    log += "\nPyLot connected to user's remote server\n";
+    conn.exec("ls", (err, stream) => {
+      if (err) {
+        log += "\nCommand execution failed\n";
+      }
+      stream.stdout.on("data", (data) => {
+        log += `\n***\n STDOUT : \n${data.toString()}\n***`;
+      });
+      stream.stderr.on("data", (data) => {
+        log += `\n***\n STDERR : \n${data.toString()}\n***`;
+      });
+      stream.on("close", () => {
+        log += "\nConnection closed from server\n";
+        conn.end();
+      });
+    });
+  });
+  conn.on("end", () => {
+    log += "\nDisconnected to server.\n";
+    res.send(`\nLog:\n${log}`);
+  });
+  conn.on("error", () => {
+    log += "\nConnection error.\n";
+  });
+  conn.connect(connectionDetails);
+}
 //================================================================================================================================================================================
 //================================================================================================================================================================================
 //~~END OF DB OPERATIONS
