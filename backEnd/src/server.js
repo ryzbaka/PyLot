@@ -1,12 +1,12 @@
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
-const app = express();
 const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const User = require("./models/Users");
 const { Client } = require("ssh2");
 const port = 5555;
+const app = express();
 
 app.use(bodyParser.json());
 require("dotenv").config({ path: path.join(__dirname, ".env") });
