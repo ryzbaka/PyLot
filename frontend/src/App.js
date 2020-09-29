@@ -8,7 +8,7 @@ import Signup from "./Signup";
 import SignInContext from "./SignInContext";
 
 const App = () => {
-  const signedStateHook = useState("signed out");
+  const signedStateHook = useState(["Signed Out","None","None"]);//maybe add a dictionary similar to the one in SignInContext.js
   return (
     <React.StrictMode>
       <SignInContext.Provider value={signedStateHook}>

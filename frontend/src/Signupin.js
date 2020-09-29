@@ -18,7 +18,7 @@ const Signupin = () => {
         .post("/users/signin", formData)
         .then((response) => {
           if(response.data==="Authentication Successful"){
-              setSignInState(username);
+              setSignInState(["Signed In",username,password]);
           }else{
             alert("Authentication failed.")
           }
