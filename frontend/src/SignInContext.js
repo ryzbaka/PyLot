@@ -1,12 +1,5 @@
-import {createContext} from "react";
+import { createContext } from "react";
 
-const SignInContext = createContext([
-    [
-        "Signed Out",
-        "None",
-        "None"
-    ],
-    ()=>{}
-]);
+const SignInContext = createContext([["Signed Out", "None", "None"], () => {}]);
 
 export default SignInContext;
