@@ -39,35 +39,3 @@ class Profile extends Component{
     }
 }
 export default Profile;
-/*
-const Profile =  ({status,username,password})=>{
-    //const servers = ["server1","server2","server3","server4","server5","server6","server6","server6","server6","server6","server6","server6","server6","server6","server6","server6","server6","server6"];
-    function addServer(){
-        alert("Add functionality to redirect page to /addserver route where there will be a form to accept information about new server.")
-    }
-    const postObject ={
-        username:username,
-        password:password
-    }
-    //const server =  axios.post("/users/getservers",postObject);
-    const [servers,setServers] = useState([])
-    async function requestServers(){
-        const fetchedServers = await axios.post("/users/getservers");
-        setServers(fetchedServers);
-    }
-    return (
-        <div className="server-page-container">
-            <h1>{username}'s Servers</h1>
-            <div className="servers-container">
-                <button className = "add-server" onClick={addServer}> Add server</button>                
-                {servers.map((server)=>(
-                <div className="server-container">
-                    {server}
-                </div>
-                ))}
-            </div>
-        </div>
-    )
-}
-export default Profile;
-*/
