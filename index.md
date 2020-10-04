@@ -63,3 +63,26 @@ Example
   password: "testpass",
 }
 ```
+#### Display Health Data from Server [POST]
+    *Path: `/health/display`
+    *Params :
+     *<strong>serverName</strong>
+     *<strong>details</strong>
+```
+Example
+{
+  serverName:"test"
+  details:"all" or"last10" or "first10"
+}
+```
+
+### Bash Commands that are required for automated login into remote server
+    git clone https://github.com/mathewpius19/Server-Health-Monitor-v2.git
+    cd Server-Health-Monitor-v2
+    chmod 777 requirements.py
+    chmod 777 report.py
+    ```password, servername and username will be passed on by our backend```
+    echo {password}|sudo -S apt install python3-pip
+    pip3 install psutil
+    pip3 install requests
+    python report.py {servername} {username}
