@@ -243,17 +243,34 @@ async function sshInit(username, password, host, res) {
 app.post(
   "/display",
   ({ body: { username, password, user, serverName, details } }, res) => {
-    User.findOne({ username: username }, "hash").exec(async (err, result) => {
+    User.findOne({ username: username }, "hash servers").exec(async (err, result) => {
       if (err) {
         res.json({ message: err });
       } else {
         if (result) {
-          const { hash } = result;
+          const name = serverName
+          const { hash , servers} = result;
+          let ip = '';
+          let serverUsername = ''
+          if(servers.length===0){
+            res.json({message:"This user does not have any servers"})
+          }
+          for(let i =0;i<servers.length;i++){
+            const {serverName,ipAddr,user} = servers[i];
+            if (serverName===name){
+              ip = ipAddr;
+              serverUsername=user;
+              break;
+            }
+          }
+          if(ip==='' || serverUsername===''){
+            res.json({message:"server with that name not found or server username is invalid."})
+          }
           const checkAuthentication = await bcrypt.compare(password, hash);
           if (checkAuthentication) {
             request.post(
               {
-                url: "http://167.71.237.73:4400/Display", //shouldn't this be the IP of the user's server.
+                url: `http://${ip}:4400/Display`, //shouldn't this be the IP of the user's server.
                 json: {
                   Username: user,
                   Servername: serverName,
@@ -263,11 +280,11 @@ app.post(
                   "Content-type": "application/json",
                 },
               },
-              (err, { body }) => {//callback to be executed once request has been sent.
+              (err, response) => {//callback to be executed once request has been sent.
                 if (err) {
                   res.json({ message: err });
                 } else {
-                  res.send(body);
+                  res.send(response.body);
                 }
               }
             );
