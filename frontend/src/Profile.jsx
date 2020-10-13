@@ -24,12 +24,12 @@ class Profile extends Component{
                 <div className="server-page-container">
                     <h2>{this.state.username}'s Servers</h2>
                     <div className="servers-container">
-                        {servers.map(({serverName,ipAddr,sshKey},index)=>{
+                        {servers.map(({serverName,ipAddr,sshKey,user,password},index)=>{
                             return (<div className="server-container">
                                 <p>{serverName}</p>
                                 <p>{ipAddr}</p>
                                 <p>{sshKey?"SSH enabled":"Password access"}</p>
-                                <Link to={`/serverDetails/${this.state.username}/${serverName}`}>Details</Link>
+                                <Link to={`/serverDetails/${this.state.username}/${serverName}/${user}/${password}`}>Details</Link>
                             </div>)
                         })}
                     </div>

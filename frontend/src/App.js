@@ -35,7 +35,7 @@ const App = () => {
               <About path="/about" />
               <Signupin path="/signupin" />
               <Signup path="/signup" />
-              <ServerDetails path="/serverDetails/:username/:serverName" />
+              <ServerDetails path="/serverDetails/:username/:serverName/:serverUser/:serverPassword" />
             </Router>
           </div>
         </div>
