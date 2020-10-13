@@ -1,5 +1,5 @@
 # ![screenshot](pylotlogo.PNG)
-
+A web based IDE for writing ETL pipelines in Python.
 ## Contributors
 * Hamza Ali Rizvi
 * Mathew Pius
