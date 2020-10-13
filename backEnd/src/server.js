@@ -1,3 +1,4 @@
+const request = require("request");
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -236,6 +237,54 @@ async function sshInit(username, password, host, res) {
   });
   conn.connect(connectionDetails);
 }
+//================================================================================================================================================================================
+//~Connecting to Health Server Application
+//================================================================================================================================================================================
+app.post(
+  "/display",
+  ({ body: { username, password, user, serverName, details } }, res) => {
+    User.findOne({ username: username }, "hash").exec(async (err, result) => {
+      if (err) {
+        res.json({ message: err });
+      } else {
+        if (result) {
+          const { hash } = result;
+          const checkAuthentication = await bcrypt.compare(password, hash);
+          if (checkAuthentication) {
+            request.post(
+              {
+                url: "http://167.71.237.73:4400/Display", //shouldn't this be the IP of the user's server.
+                json: {
+                  Username: user,
+                  Servername: serverName,
+                  Details: details, //again wtf is details.
+                },
+                headers: {
+                  "Content-type": "application/json",
+                },
+              },
+              (err, { body }) => {//callback to be executed once request has been sent.
+                if (err) {
+                  res.json({ message: err });
+                } else {
+                  res.send(body);
+                }
+              }
+            );
+          } else {
+            res.json({
+              message: "Data retrieval failed. Invalid credentials.",
+            });
+          }
+        } else {
+          res.json({ message: "User does not exist." });
+        }
+      }
+    });
+  }
+);
+//================================================================================================================================================================================
+//================================================================================================================================================================================
 //================================================================================================================================================================================
 //~CONNECTIING TO MONGODB SERVER
 //================================================================================================================================================================================
