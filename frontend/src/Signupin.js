@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import axios from "axios";
 import SignInContext from "./SignInContext";
 const Signupin = () => {
@@ -17,6 +17,7 @@ const Signupin = () => {
       axios.post("/users/signin", formData).then((response) => {
         if (response.data === "Authentication Successful") {
           setSignInState(["Signed In", username, password]);
+          navigate("/");
         } else {
           alert("Authentication failed.");
         }

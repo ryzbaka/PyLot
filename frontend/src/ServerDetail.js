@@ -1,4 +1,12 @@
 import React, { Component, setState } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Table from "@material-ui/core/Table";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 
 class ServerDetails extends Component {
@@ -22,7 +30,6 @@ class ServerDetails extends Component {
         details: "last10",
       })
       .then(({ data }) => {
-        console.log(JSON.stringify(data));
         this.setState({
           health: data,
           loading: false,
@@ -33,15 +40,63 @@ class ServerDetails extends Component {
   }
   render() {
     if (this.state.loading) {
-      return <h1>Loading</h1>;
-    } else {
       return (
-        <div>
-          <h1>Username: {this.state.username}</h1>
-          <h2>Server Name: {this.state.serverName}</h2>
-          <h3>Server Username: {this.state.user}</h3>
-          <h4>Server Password:{this.state.password}</h4>
+        <div className="serverDetailsPageMainContainer">
+          <CircularProgress/>
         </div>
+      );
+    } else {
+      const healthData = this.state.health;
+      console.log(healthData)
+      const {Epoch_Time,CPU_Usage_Percent, Memory_Free, Disk_Free} = healthData;
+      if(Epoch_Time==undefined){
+        return <h1>Health Reporting server offline</h1>//temp fix
+      }
+      const headCells=[
+        {id:"time",numeric:true,disablePadding:true,label:"Epoch Time"},
+        {id:"cpupercent",numeric:true,disablePadding:true,label:"CPU Usage (%)"},
+        {id:"memfree",numeric:true,disablePadding:true,label:"Memory Free (bytes)"},
+        {id:"diskfree",numeric:true,disablePadding:true,label:"Disk Free (bytes)"},
+      ]
+      const rows = [];
+      function createData(col1,col2,col3,col4){
+        return {col1,col2,col3,col4}
+      }
+      Epoch_Time.forEach((element,index) => {
+        const newRow = createData(element,parseFloat(CPU_Usage_Percent[index]),parseFloat(Memory_Free[index]),parseFloat(Disk_Free[index]));
+        rows.push(newRow);
+      });
+      console.log(rows)
+      return (
+        <div className="health-data">
+
+        <TableContainer component={Paper}>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Epoch Time</TableCell>
+                  <TableCell align="right">CPU Usage (%)</TableCell>
+                  <TableCell align="right">Memory Free (bytes)</TableCell>
+                  <TableCell align="right">DiskFree (bytes)</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {
+                  rows.map((row,index)=>(
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        {row.col1}
+                      </TableCell>
+                      <TableCell align="right">{row.col2}</TableCell>
+                      <TableCell align="right">{row.col3}</TableCell>
+                      <TableCell align="right">{row.col4}</TableCell>
+                    </TableRow>
+                  ))
+                }
+              </TableBody>
+            </Table>
+          </TableContainer>
+          </div>
       );
     }
   }

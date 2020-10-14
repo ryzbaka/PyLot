@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Sidebar from "./Sidebar";
 import { Router } from "@reach/router";
 import Home from "./Home";
@@ -7,9 +7,10 @@ import Signupin from "./Signupin";
 import Signup from "./Signup";
 import SignInContext from "./SignInContext";
 import ServerDetails from "./ServerDetail.js";
-
+import Logout from "./Logout.js";
 const App = () => {
   const signedStateHook = useState(["Signed Out", "None", "None"]); //maybe add a dictionary similar to the one in SignInContext.js
+  const [signInState, setSignInState] = useContext(SignInContext);
   return (
     <React.StrictMode>
       <SignInContext.Provider value={signedStateHook}>
@@ -25,7 +26,13 @@ const App = () => {
               <Sidebar
                 options={["Sign Up / Sign In"]}
                 links={["/signupin"]}
+                home={true}
                 path="/"
+              />
+              <Sidebar
+                options={["Home"]}
+                links={["/"]}
+                path="/serverDetails/*"
               />
             </Router>
           </div>
@@ -36,6 +43,7 @@ const App = () => {
               <Signupin path="/signupin" />
               <Signup path="/signup" />
               <ServerDetails path="/serverDetails/:username/:serverName/:serverUser/:serverPassword" />
+              <Logout path="/logout" />
             </Router>
           </div>
         </div>
