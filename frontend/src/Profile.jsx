@@ -35,7 +35,7 @@ class Profile extends Component{
                 <div className="server-page-container">
                     <h2>{this.state.username}'s Servers</h2>
                     <div className="servers-container">
-                        <List component="nav">
+                        <List>
                         {servers.map(({serverName,ipAddr,sshKey,user,password},index)=>{
                             return (
                             <Link key={index} to={`/serverDetails/${this.state.username}/${serverName}/${user}/${password}`} style={{ textDecoration: "none", color: "white" }}>

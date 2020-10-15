@@ -6,8 +6,15 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import TablePagination from "@material-ui/core/TablePagination";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 import axios from "axios";
+import {navigate} from "@reach/router";
 
 class ServerDetails extends Component {
   state = {
@@ -46,30 +53,65 @@ class ServerDetails extends Component {
         </div>
       );
     } else {
+      const {serverName,username}=this.state;
+      function randomlmao(){
+        const sName=prompt("Please enter name of the server to continue server deletion.");
+        if(sName===serverName){
+          axios.post("/users/removeserver",{
+            username:username,
+            serverName:sName
+          }).then(response=>{
+            if(response.data===`Server : ${serverName} was deleted successfully.`){
+              alert("Server deleted successfully.")
+              navigate("/")
+            }else{
+              alert("Failed to delete server.[Internal Issue]")
+            }
+          })
+        }else{
+          alert("Did not delete server.")
+        }
+      }
       const healthData = this.state.health;
       console.log(healthData)
       const {Epoch_Time,CPU_Usage_Percent, Memory_Free, Disk_Free} = healthData;
-      if(Epoch_Time==undefined){
-        return <h1>Health Reporting server offline</h1>//temp fix
+      if(Epoch_Time===undefined){
+        return (
+          <Card style={{maxHeight:"20%"}}>
+          <CardContent>
+            <Typography variant="h5">
+              {this.state.serverName}
+            </Typography>
+            <Typography>
+              {this.state.user}
+            </Typography>
+            <p className="waves-effect btn remove-server"onClick={randomlmao}>REMOVE SERVER</p>
+          </CardContent>
+        </Card>
+          )
       }
-      const headCells=[
-        {id:"time",numeric:true,disablePadding:true,label:"Epoch Time"},
-        {id:"cpupercent",numeric:true,disablePadding:true,label:"CPU Usage (%)"},
-        {id:"memfree",numeric:true,disablePadding:true,label:"Memory Free (bytes)"},
-        {id:"diskfree",numeric:true,disablePadding:true,label:"Disk Free (bytes)"},
-      ]
       const rows = [];
       function createData(col1,col2,col3,col4){
         return {col1,col2,col3,col4}
       }
       Epoch_Time.forEach((element,index) => {
-        const newRow = createData(element,parseFloat(CPU_Usage_Percent[index]),parseFloat(Memory_Free[index]),parseFloat(Disk_Free[index]));
+        const epochTime = element;
+        const newRow = createData(epochTime,parseFloat(CPU_Usage_Percent[index]),parseFloat(Memory_Free[index]),parseFloat(Disk_Free[index]));
         rows.push(newRow);
       });
-      console.log(rows)
       return (
         <div className="health-data">
-
+        <Card style={{maxHeight:"20%"}}>
+          <CardContent>
+            <Typography variant="h5">
+              {this.state.serverName}
+            </Typography>
+            <Typography>
+              {this.state.user}
+            </Typography>
+            <p className="waves-effect btn remove-server"onClick={randomlmao}>REMOVE SERVER</p>
+          </CardContent>
+        </Card>
         <TableContainer component={Paper}>
             <Table size="small">
               <TableHead>
