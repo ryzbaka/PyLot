@@ -77,13 +77,16 @@ class ServerDetails extends Component {
       const {Epoch_Time,CPU_Usage_Percent, Memory_Free, Disk_Free} = healthData;
       if(Epoch_Time===undefined){
         return (
-          <Card style={{maxHeight:"20%"}}>
+          <Card style={{maxHeight:"30%",minHeight:"50%"}}>
           <CardContent>
             <Typography variant="h5">
               {this.state.serverName}
             </Typography>
             <Typography>
               {this.state.user}
+            </Typography>
+            <Typography>
+              Health reporting service is offline on remote server
             </Typography>
             <p className="waves-effect btn remove-server"onClick={randomlmao}>REMOVE SERVER</p>
           </CardContent>
@@ -101,7 +104,7 @@ class ServerDetails extends Component {
       });
       return (
         <div className="health-data">
-        <Card style={{maxHeight:"20%"}}>
+        <Card style={{maxHeight:"29%"}}>
           <CardContent>
             <Typography variant="h5">
               {this.state.serverName}

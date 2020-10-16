@@ -34,19 +34,17 @@ const Signupin = () => {
           }}
         >
           <label htmlFor="username">
+            Username
             <input
               id="username"
-              value={username}
-              placeholder="username"
               onChange={(event) => setUsername(event.target.value)}
             />
           </label>
           <label htmlFor="password">
+            Password
             <input
               id="password"
-              placeholder="password"
               type="password"
-              value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
           </label>

@@ -8,6 +8,8 @@ import Signup from "./Signup";
 import SignInContext from "./SignInContext";
 import ServerDetails from "./ServerDetail.js";
 import Logout from "./Logout.js";
+import AddServer from "./AddServer";
+
 const App = () => {
   const signedStateHook = useState(["Signed Out", "None", "None"]); //maybe add a dictionary similar to the one in SignInContext.js
   const [signInState, setSignInState] = useContext(SignInContext);
@@ -34,6 +36,11 @@ const App = () => {
                 links={["/"]}
                 path="/serverDetails/*"
               />
+              <Sidebar
+                options={["Home"]}
+                links={["/"]}
+                path="/addServer"
+              />
             </Router>
           </div>
           <div className="nested-main-container">
@@ -44,6 +51,7 @@ const App = () => {
               <Signup path="/signup" />
               <ServerDetails path="/serverDetails/:username/:serverName/:serverUser/:serverPassword" />
               <Logout path="/logout" />
+              <AddServer path="/addServer"/>
             </Router>
           </div>
         </div>
