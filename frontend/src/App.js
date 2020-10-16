@@ -36,11 +36,7 @@ const App = () => {
                 links={["/"]}
                 path="/serverDetails/*"
               />
-              <Sidebar
-                options={["Home"]}
-                links={["/"]}
-                path="/addServer"
-              />
+              <Sidebar options={["Home"]} links={["/"]} path="/addServer" />
             </Router>
           </div>
           <div className="nested-main-container">
@@ -51,7 +47,7 @@ const App = () => {
               <Signup path="/signup" />
               <ServerDetails path="/serverDetails/:username/:serverName/:serverUser/:serverPassword" />
               <Logout path="/logout" />
-              <AddServer path="/addServer"/>
+              <AddServer path="/addServer" />
             </Router>
           </div>
         </div>

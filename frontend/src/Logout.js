@@ -6,8 +6,8 @@ const Logout = () => {
   const [signInState, setSignInState] = useContext(SignInContext);
   if (signInState[0] === "Signed In") {
     setSignInState(["Signed Out", "None", "None"]);
-    navigate("/")
-    return <h1>Signing out</h1>
+    navigate("/");
+    return <h1>Signing out</h1>;
   } else {
     return <h1>Signed Out</h1>;
   }
