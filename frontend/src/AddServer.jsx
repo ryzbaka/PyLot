@@ -2,15 +2,7 @@ import React,{useContext,useState} from "react";
 import axios from "axios";
 import {navigate} from "@reach/router"
 import SignInContext from "./SignInContext";
-/*
 
-    "username":"hamza.ryzvy",
-    "serverName":"digitalOceanFlaskServer-2",
-    "ipAddr":"167.71.237.73",
-    "sshKey":false,
-    "user":"hamza",
-    "password":"Zainab151214124"
-*/
 const AddServer=()=>{
     const [context,setSignInstate]=useContext(SignInContext);
     const [serverName,setServerName]=useState("");
