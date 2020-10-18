@@ -73,7 +73,7 @@ class ServerDetails extends Component {
       );
     } else {
       const { serverName, username } = this.state;
-      function randomlmao() {
+      function RemoveServer() {
         const sName = prompt(
           "Please enter name of the server to continue server deletion."
         );
@@ -121,7 +121,7 @@ class ServerDetails extends Component {
               </Typography>
               <p
                 className="waves-effect btn remove-server"
-                onClick={randomlmao}
+                onClick={RemoveServer}
               >
                 REMOVE SERVER
               </p>
@@ -151,7 +151,7 @@ class ServerDetails extends Component {
               <Typography>{this.state.user}</Typography>
               <p
                 className="waves-effect btn remove-server"
-                onClick={randomlmao}
+                onClick={RemoveServer}
               >
                 REMOVE SERVER
               </p>
