@@ -7,11 +7,11 @@ A web based IDE for writing ETL pipelines in Python.
 * [Trello Board](https://trello.com/b/9zQ3B1nt/pylot-major-project)
 * [Documentation](https://ryzbaka.github.io/PyLot/)
 ## Contributors 👨‍💻
-### Core Contributors
+### Core Contributors 🐱‍🏍
 * Hamza Ali Rizvi 🐱‍👤
 * Mathew Pius 🐱‍🐉
 * Arihant Chawla 🐱‍👓
 * Deekshant Hooda 🐱‍🚀
 * Naman Gupta 🐱‍💻
-### Hacktoberfest Contributors
+### Hacktoberfest Contributors 👨‍💻👩‍💻
 * [Matt Stewardson](https://github.com/MSTEWARDSON)
