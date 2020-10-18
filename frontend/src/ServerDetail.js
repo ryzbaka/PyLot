@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-constructor */
 import React, { Component, setState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Table from "@material-ui/core/Table";
@@ -15,19 +16,37 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import { navigate } from "@reach/router";
+import openConnection from "socket.io-client";
+
+function subscribeToSocket(ipAddr,callBack){
+  const socket = openConnection(`http://${ipAddr}:5000/`);
+  socket.emit('get-health',window.location.href);
+  socket.on('send-health',receivedData=>callBack(null,receivedData))
+}
 
 class ServerDetails extends Component {
+  constructor(props){
+    super(props);
+    subscribeToSocket(this.state.ipAddr,(err,receivedData)=>{
+      this.setState({data:receivedData});
+    })
+  }
   state = {
     password: this.props.serverPassword,
     user: this.props.serverUser,
     username: this.props.username,
     serverName: this.props.serverName,
+    ipAddr:this.props.ipAddr,
     columnNames: [],
     loading: true,
+    data:{
+      uptime:"🤷‍",
+      operatingSystem:"🤷‍♂️",
+      memoryUsedPercent:"🤷‍",
+      cpuUsage:"🤷‍♂️"
+    }
   };
   componentDidMount() {
-    //write code here to fetch data
-
     axios
       .post("/display", {
         username: this.state.username,
@@ -92,9 +111,13 @@ class ServerDetails extends Component {
           <Card style={{ maxHeight: "30%", minHeight: "50%" }}>
             <CardContent>
               <Typography variant="h5">{this.state.serverName}</Typography>
-              <Typography>{this.state.user}</Typography>
+              <Typography>{this.state.data.operatingSystem}</Typography>
+              <Typography>User: {this.state.user}</Typography>
+              <Typography>Uptime: {this.state.data.uptime}</Typography>
+              <Typography>{this.state.data.cpuUsage}</Typography>
+              <Typography>Memory Usage: {this.state.data.memoryUsedPercent}</Typography>
               <Typography>
-                Health reporting service is offline on remote server
+                Health reporting service is offline on remote server 😢
               </Typography>
               <p
                 className="waves-effect btn remove-server"

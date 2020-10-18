@@ -49,7 +49,7 @@ class Profile extends Component{
                         <List>
                         {servers.map(({serverName,ipAddr,sshKey,user,password},index)=>{
                             return (
-                            <Link key={index} to={`/serverDetails/${this.state.username}/${serverName}/${user}/${password}`} style={{ textDecoration: "none", color: "white" }}>
+                            <Link key={index} to={`/serverDetails/${this.state.username}/${serverName}/${ipAddr}/${user}/${password}`} style={{ textDecoration: "none", color: "white" }}>
                             <ListItem button>
                                 <ListItemIcon>
                                     <DnsIcon/>

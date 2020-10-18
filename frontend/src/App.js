@@ -9,6 +9,7 @@ import SignInContext from "./SignInContext";
 import ServerDetails from "./ServerDetail.js";
 import Logout from "./Logout.js";
 import AddServer from "./AddServer";
+import SocketApi from "./Api.jsx";
 
 const App = () => {
   const signedStateHook = useState(["Signed Out", "None", "None"]); //maybe add a dictionary similar to the one in SignInContext.js
@@ -45,9 +46,10 @@ const App = () => {
               <About path="/about" />
               <Signupin path="/signupin" />
               <Signup path="/signup" />
-              <ServerDetails path="/serverDetails/:username/:serverName/:serverUser/:serverPassword" />
+              <ServerDetails path="/serverDetails/:username/:serverName/:ipAddr/:serverUser/:serverPassword" />
               <Logout path="/logout" />
               <AddServer path="/addServer" />
+              <SocketApi path="/testSocket"/>
             </Router>
           </div>
         </div>
