@@ -23,7 +23,7 @@ class SocketApi extends Component{
         return (
             <div>
                 <h1>Socket Test</h1>
-                <h2>Socket data:{this.state.data}</h2>
+                <h2>Socket data:{JSON.stringify(this.state.data)}</h2>
             </div>
         )
     }
