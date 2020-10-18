@@ -1,6 +1,6 @@
 # ![screenshot](pylotlogo.PNG)
 A web based IDE for writing ETL pipelines in Python.
-<strong>Currently in pre alpha.</strong>
+* <strong>Currently in pre-alpha.</strong>
 ## License
 * [MIT](https://github.com/ryzbaka/PyLot/blob/master/LICENSE)
 ## Progress and Documentation
