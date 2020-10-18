@@ -126,10 +126,10 @@ class ServerDetails extends Component {
               <Typography>{this.state.data.operatingSystem}</Typography>
               <Typography>User: {this.state.user}</Typography>
               <Typography>Uptime: {this.state.data.uptime}</Typography>
-              <Typography>{this.state.data.cpuUsage}</Typography>
-              <Typography>Memory Usage: {this.state.data.memoryUsedPercent}</Typography>
+              <Typography>{this.state.data.cpuUsage}💻</Typography>
+              <Typography>Memory Usage: {this.state.data.memoryUsedPercent}🐏</Typography>
               <Typography>
-                Health reporting service is offline on remote server 😢
+                {this.state.socketRunning?'Health Reporting Service is online 🩺':'Health reporting service is offline on remote server 😢'}
               </Typography>
               <p
                 className="waves-effect btn remove-server"
