@@ -173,11 +173,11 @@ app.post("/users/getservers", ({ body: { username, password } }, res) => {
 //================================================================================================================================================================================
 app.post(
   "/health/setupserver",
-  ({ body: { username, password, serverName } }, res) => {
+  ({ body: { username, serverName } }, res) => {
     User.findOne({ username: username }).exec(async (err, resultant) => {
       if (resultant) {
         const { servers, hash } = resultant;
-        const authenticationSuccessful = await bcrypt.compare(password, hash);
+        const authenticationSuccessful =true// await bcrypt.compare(password, hash);
         if (authenticationSuccessful) {
           const serverIndex = servers
             .map((el, index) => el.serverName === serverName)
@@ -212,7 +212,7 @@ async function sshInit(username, password, host, res) {
   let log = "";
   conn.on("ready", () => {
     log += "\nPyLot connected to user's remote server\n";
-    conn.exec("ls", (err, stream) => {
+    conn.exec("git clone https://github.com/ryzbaka/PyLotHealthReportingServicePayload.git;cd PyLotHealthReportingServicePayload;npm i;npx forever start healthMonitor.js", (err, stream) => {
       if (err) {
         log += "\nCommand execution failed\n";
       }

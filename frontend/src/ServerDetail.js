@@ -28,7 +28,7 @@ class ServerDetails extends Component {
   constructor(props){
     super(props);
     subscribeToSocket(this.state.ipAddr,(err,receivedData)=>{
-      this.setState({data:receivedData});
+      this.setState({data:receivedData,socketRunning:true});
     })
   }
   state = {
@@ -39,6 +39,7 @@ class ServerDetails extends Component {
     ipAddr:this.props.ipAddr,
     columnNames: [],
     loading: true,
+    socketRunning:false,
     data:{
       uptime:"🤷‍",
       operatingSystem:"🤷‍♂️",
@@ -72,7 +73,7 @@ class ServerDetails extends Component {
         </div>
       );
     } else {
-      const { serverName, username } = this.state;
+      const { serverName, username, socketRunning } = this.state;
       function RemoveServer() {
         const sName = prompt(
           "Please enter name of the server to continue server deletion."
@@ -96,6 +97,17 @@ class ServerDetails extends Component {
             });
         } else {
           alert("Did not delete server.");
+        }
+      }
+      function startHealthReportingService(){
+        if(socketRunning){
+          alert('Health reporting service already running on remote server.')
+        }else{
+          const data = {
+            username:username,
+            serverName:serverName
+          };
+          axios.post("/health/setupserver",data).then(response=>{console.log(response);alert("Done. Refresh page.")})
         }
       }
       const healthData = this.state.health;
@@ -124,6 +136,12 @@ class ServerDetails extends Component {
                 onClick={RemoveServer}
               >
                 REMOVE SERVER
+              </p>
+              <p
+                className="waves-effect btn remove-server"
+                onClick={startHealthReportingService}
+              >
+                Setup Health Reporting Service
               </p>
             </CardContent>
           </Card>

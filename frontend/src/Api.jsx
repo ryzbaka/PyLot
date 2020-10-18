@@ -10,7 +10,7 @@ function subscribeToSocket(ipAddr,cb){
 class SocketApi extends Component{
     constructor(props){
         super(props);
-        subscribeToSocket("localhost",(err,receivedData)=>{
+        subscribeToSocket("167.71.237.73",(err,receivedData)=>{
             this.setState({
                 data:receivedData
             })
