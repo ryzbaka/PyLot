@@ -1,5 +1,5 @@
 # ![screenshot](pylotlogo.PNG)
-A web based IDE for writing ETL pipelines in Python.
+✈A web based IDE for writing ETL pipelines in Python.
 * <strong>Currently in pre-alpha.</strong>
 ## License
 * [MIT](https://github.com/ryzbaka/PyLot/blob/master/LICENSE)
@@ -7,7 +7,7 @@ A web based IDE for writing ETL pipelines in Python.
 * [Trello Board](https://trello.com/b/9zQ3B1nt/pylot-major-project)
 * [Documentation](https://ryzbaka.github.io/PyLot/)
 ## Contributors
-* Hamza Ali Rizvi
+* Hamza Ali Rizvi 
 * Mathew Pius
 * Arihant Chawla
 * Deekshant Hooda
