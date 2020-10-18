@@ -2,9 +2,9 @@ const express = require('express')
 const bodyParser = require("body-parser")
 const bcrypt = require("bcryptjs");
 
-const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
+const app = express.Router();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const User = require("../models/Users");
 
@@ -161,4 +161,4 @@ app.post(
     });
   });
 
-module.exports = router;
+module.exports = app;
