@@ -6,7 +6,7 @@ const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-const User = require("./models/Users");
+const User = require("../models/Users");
 
 app.post(
     "/signup",
