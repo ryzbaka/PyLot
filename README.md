@@ -12,3 +12,5 @@ A web based IDE for writing ETL pipelines in Python.
 * Arihant Chawla 🐱‍👓
 * Deekshant Hooda 🐱‍🚀
 * Naman Gupta 🐱‍💻
+### Hacktoberfest Contributors
+* [Matt Stewardson](https://github.com/MSTEWARDSON)
