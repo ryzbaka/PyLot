@@ -8,10 +8,10 @@ A web based IDE for writing ETL pipelines in Python.
 * [Documentation](https://ryzbaka.github.io/PyLot/)
 ## Contributors 👨‍💻
 ### Core Contributors 🐱‍🏍
-* Hamza Ali Rizvi 🐱‍👤
-* Mathew Pius 🐱‍🐉
-* Arihant Chawla 🐱‍👓
-* Deekshant Hooda 🐱‍🚀
-* Naman Gupta 🐱‍💻
+* [Hamza Ali Rizvi](https://github.com/ryzbaka) 🐱‍👤
+* [Mathew Pius](https://github.com/mathewpius19) 🐱‍🐉
+* [Arihant Chawla](https://github.com/ArihantChawla) 🐱‍👓
+* [Deekshant Hooda](https://github.com/dk-blackops) 🐱‍🚀
+* [Naman Gupta](https://github.com/ngnammu) 🐱‍💻
 ### Hacktoberfest Contributors 👨‍💻👩‍💻
 * [Matt Stewardson](https://github.com/MSTEWARDSON)
