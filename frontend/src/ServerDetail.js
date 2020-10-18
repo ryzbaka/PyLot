@@ -18,34 +18,34 @@ import axios from "axios";
 import { navigate } from "@reach/router";
 import openConnection from "socket.io-client";
 
-function subscribeToSocket(ipAddr,callBack){
+function subscribeToSocket(ipAddr, callBack) {
   const socket = openConnection(`http://${ipAddr}:5000/`);
-  socket.emit('get-health',window.location.href);
-  socket.on('send-health',receivedData=>callBack(null,receivedData))
+  socket.emit("get-health", window.location.href);
+  socket.on("send-health", (receivedData) => callBack(null, receivedData));
 }
 
 class ServerDetails extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    subscribeToSocket(this.state.ipAddr,(err,receivedData)=>{
-      this.setState({data:receivedData,socketRunning:true});
-    })
+    subscribeToSocket(this.state.ipAddr, (err, receivedData) => {
+      this.setState({ data: receivedData, socketRunning: true });
+    });
   }
   state = {
     password: this.props.serverPassword,
     user: this.props.serverUser,
     username: this.props.username,
     serverName: this.props.serverName,
-    ipAddr:this.props.ipAddr,
+    ipAddr: this.props.ipAddr,
     columnNames: [],
     loading: true,
-    socketRunning:false,
-    data:{
-      uptime:"🤷‍",
-      operatingSystem:"🤷‍♂️",
-      memoryUsedPercent:"🤷‍",
-      cpuUsage:"🤷‍♂️"
-    }
+    socketRunning: false,
+    data: {
+      uptime: "🤷‍",
+      operatingSystem: "🤷‍♂️",
+      memoryUsedPercent: "🤷‍",
+      cpuUsage: "🤷‍♂️",
+    },
   };
   componentDidMount() {
     axios
@@ -99,15 +99,18 @@ class ServerDetails extends Component {
           alert("Did not delete server.");
         }
       }
-      function startHealthReportingService(){
-        if(socketRunning){
-          alert('Health reporting service already running on remote server.')
-        }else{
+      function startHealthReportingService() {
+        if (socketRunning) {
+          alert("Health reporting service already running on remote server.");
+        } else {
           const data = {
-            username:username,
-            serverName:serverName
+            username: username,
+            serverName: serverName,
           };
-          axios.post("/health/setupserver",data).then(response=>{console.log(response);alert("Done. Refresh page.")})
+          axios.post("/health/setupserver", data).then((response) => {
+            console.log(response);
+            alert("Done. Refresh page.");
+          });
         }
       }
       const healthData = this.state.health;
@@ -127,9 +130,13 @@ class ServerDetails extends Component {
               <Typography>User: {this.state.user}</Typography>
               <Typography>Uptime: {this.state.data.uptime}</Typography>
               <Typography>{this.state.data.cpuUsage}💻</Typography>
-              <Typography>Memory Usage: {this.state.data.memoryUsedPercent}🐏</Typography>
               <Typography>
-                {this.state.socketRunning?'Health Reporting Service is online 🩺':'Health reporting service is offline on remote server 😢'}
+                Memory Usage: {this.state.data.memoryUsedPercent}🐏
+              </Typography>
+              <Typography>
+                {this.state.socketRunning
+                  ? "Health Reporting Service is online 🩺"
+                  : "Health reporting service is offline on remote server 😢"}
               </Typography>
               <p
                 className="waves-effect btn remove-server"

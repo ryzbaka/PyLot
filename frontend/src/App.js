@@ -49,7 +49,7 @@ const App = () => {
               <ServerDetails path="/serverDetails/:username/:serverName/:ipAddr/:serverUser/:serverPassword" />
               <Logout path="/logout" />
               <AddServer path="/addServer" />
-              <SocketApi path="/testSocket"/>
+              <SocketApi path="/testSocket" />
             </Router>
           </div>
         </div>
