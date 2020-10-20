@@ -63,11 +63,23 @@ Example
   password: "testpass",
 }
 ```
+#### Setup Health Server [POST]
+  * Path : `/health/setupserver`
+  * Params :
+    * <strong>username</strong> : Username (String).
+    * <strong>serverName</strong> : Server Name (String).
+```
+Example
+{
+  username: "johndoe123",
+  serverName:"server-2"
+}
+```
 #### Display Health Data from Server [POST]
-    *Path: `/health/display`
-    *Params :
-     *<strong>serverName</strong>
-     *<strong>details</strong>
+  * Path : `/health/display`
+  * Params :
+    * <strong>serverName</strong> : Server Name (String).
+    * <strong>details</strong> : details (String).
 ```
 Example
 {
