@@ -6,6 +6,7 @@ const sketch = (p) => {
   let noteBook;
   let canvasWidth = 1200;
   let canvasHeight = 400;
+  
   class Tile {
     constructor(name, canvasWidth, canvasHeight) {
       this.information = {
