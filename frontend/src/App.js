@@ -10,6 +10,7 @@ import ServerDetails from "./ServerDetail.js";
 import Logout from "./Logout.js";
 import AddServer from "./AddServer";
 import SocketApi from "./Api.jsx";
+import NotebookDisplay from "./Notebook.jsx";
 
 const App = () => {
   const signedStateHook = useState(["Signed Out", "None", "None"]); //maybe add a dictionary similar to the one in SignInContext.js
@@ -38,6 +39,7 @@ const App = () => {
                 path="/serverDetails/*"
               />
               <Sidebar options={["Home"]} links={["/"]} path="/addServer" />
+              <Sidebar options={["Home"]} links={["/"]} path="/notebook" />
             </Router>
           </div>
           <div className="nested-main-container">
@@ -50,6 +52,7 @@ const App = () => {
               <Logout path="/logout" />
               <AddServer path="/addServer" />
               <SocketApi path="/testSocket" />
+              <NotebookDisplay path="/notebook" />
             </Router>
           </div>
         </div>
