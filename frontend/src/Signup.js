@@ -43,6 +43,7 @@ const Signup = () => {
         }}
       >
         <label htmlFor="first-name">
+          First Name
           <input
             id="first-name"
             value={firstName}
@@ -51,6 +52,7 @@ const Signup = () => {
           />
         </label>
         <label htmlFor="last-name">
+          Last Name
           <input
             id="last-name"
             value={lastName}
@@ -59,6 +61,7 @@ const Signup = () => {
           />
         </label>
         <label htmlFor="username">
+          Username
           <input
             id="username"
             value={username}
@@ -67,6 +70,7 @@ const Signup = () => {
           />
         </label>
         <label htmlFor="email">
+          E-mail
           <input
             id="email"
             value={email}
@@ -75,6 +79,7 @@ const Signup = () => {
           />
         </label>
         <label htmlFor="password">
+          Password
           <input
             id="password"
             placeholder="password"
@@ -84,6 +89,7 @@ const Signup = () => {
           />
         </label>
         <label htmlFor="password2">
+          Re-Type Password
           <input
             id="password2"
             placeholder="retype password"

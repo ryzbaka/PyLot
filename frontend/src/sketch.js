@@ -163,7 +163,7 @@ const sketch = (p) => {
     }
   });
   saveNotebookButton.addEventListener("click", () => {
-    while (noteBook.name === "Untitled-Notebook") {
+    while (noteBook.name === "Untitled-Notebook" || noteBook.name==null) {
       const newName = prompt("Please enter name for notebook:");
       noteBook.name = newName;
     }

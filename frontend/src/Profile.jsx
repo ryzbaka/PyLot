@@ -38,7 +38,7 @@ class Profile extends Component{
                         <h2>{this.state.username}'s Servers</h2>
                         <Button
                          variant="contained"
-                         color="primary"
+                         color="seagreen"
                          startIcon={<AddIcon/>}
                          onClick={()=>{navigate("/addServer")}}
                         >
