@@ -14,7 +14,7 @@ class NotebookDisplay extends Component{
                 <button id="add-tile-button">Add tile</button>
                 <button id="remove-tile-button">Remove tile</button>
                 <button id="set-output-button">Set Output</button>
-                <button id="save-notebook">Save</button>
+                <button id="save-notebook">Save Notebook</button>
                 <P5Wrapper sketch={sketch} ></P5Wrapper>
                 <div className="tile-info">
                     <p id="tile-name"></p>
