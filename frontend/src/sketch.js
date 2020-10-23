@@ -2,11 +2,11 @@ const sketch = (p) => {
   let current = "None";
   const addTileButton = document.querySelector("#add-tile-button");
   const removeTileButton = document.querySelector("#remove-tile-button");
-  const tileNameInput = document.querySelector("#tileName");
+  const setOutputButton = document.querySelector("#set-output-button");
+  const saveNotebookButton = document.querySelector("#save-notebook");
   let noteBook;
-  let canvasWidth = 1200;
-  let canvasHeight = 400;
-  
+  let canvasWidth = p.windowWidth / 1.25;
+  let canvasHeight = p.windowHeight / 1.35;
   class Tile {
     constructor(name, canvasWidth, canvasHeight) {
       this.information = {
@@ -72,7 +72,7 @@ const sketch = (p) => {
       p.stroke("black");
       p.strokeWeight(1);
       p.point(xPos, yPos);
-      p.text(name, xPos, yPos);
+      p.text(name, xPos - 20, yPos);
       const { outputs } = this.information;
       if (outputs.length > 0) {
         outputs.forEach((element, index) => {
@@ -91,11 +91,17 @@ const sketch = (p) => {
     constructor() {
       this.name = "Untitled-Notebook";
       this.tiles = [];
+      this.tileNames = [];
     }
 
     addTile(name, canvasWidth, canvasHeight) {
-      const newTile = new Tile(name, canvasWidth, canvasHeight);
-      this.tiles.push(newTile);
+      if (this.tileNames.includes(name)) {
+        alert("Tile already exists, cannot create tile.");
+      } else {
+        const newTile = new Tile(name, canvasWidth, canvasHeight);
+        this.tiles.push(newTile);
+        this.tileNames.push(name);
+      }
     }
 
     display() {
@@ -118,26 +124,50 @@ const sketch = (p) => {
     }
 
     removeTile(tileName) {
-      this.tiles.forEach((element, index) => {
-        element.removeOutput(tileName);
-      });
-      for (let i = 0; i < this.tiles.length; i++) {
-        if (this.tiles[i].information.name === tileName) {
-          this.tiles[i].flushOutput();
-          this.tiles.splice(i, 1);
-          break;
+      if (!this.tileNames.includes(tileName)) {
+        alert("Tile does not exist.");
+      } else {
+        this.tiles.forEach((element, index) => {
+          element.removeOutput(tileName);
+        });
+        for (let i = 0; i < this.tiles.length; i++) {
+          if (this.tiles[i].information.name === tileName) {
+            this.tiles[i].flushOutput();
+            this.tiles.splice(i, 1);
+            this.tileNames.splice(i, 1);
+            break;
+          }
         }
       }
     }
   }
 
   addTileButton.addEventListener("click", () => {
-    const name = tileNameInput.value;
+    const name = prompt();
     noteBook.addTile(name, canvasWidth, canvasHeight);
   });
   removeTileButton.addEventListener("click", () => {
-    const name = tileNameInput.value;
+    const name = prompt();
     noteBook.removeTile(name, canvasWidth, canvasHeight);
+  });
+  setOutputButton.addEventListener("click", () => {
+    const tile1 = prompt("Enter name of input tile:");
+    const tile2 = prompt("Enter name of output tile:");
+    if (
+      !noteBook.tileNames.includes(tile1) ||
+      !noteBook.tileNames.includes(tile2)
+    ) {
+      alert("One of the two tile names entered does not exist.");
+    } else {
+      noteBook.setOutput(tile1, tile2);
+    }
+  });
+  saveNotebookButton.addEventListener("click", () => {
+    while (noteBook.name === "Untitled-Notebook") {
+      const newName = prompt("Please enter name for notebook:");
+      noteBook.name = newName;
+    }
+    console.log(noteBook);
   });
   p.setup = () => {
     p.createCanvas(canvasWidth, canvasHeight);
@@ -151,12 +181,5 @@ const sketch = (p) => {
     noteBook.display();
   };
   noteBook = new Notebook();
-
-  noteBook.addTile("tile1", canvasWidth, canvasHeight);
-  noteBook.addTile("tile2", canvasWidth, canvasHeight);
-  noteBook.addTile("tile3", canvasWidth, canvasHeight);
-  noteBook.setOutput("tile1", "tile2");
-  noteBook.setOutput("tile2", "tile3");
-  noteBook.setOutput("tile1", "tile3");
 };
 export default sketch;

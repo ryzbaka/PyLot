@@ -9,12 +9,17 @@ class NotebookDisplay extends Component{
     }
     render(){
         return(
-            <div>
+            <div className="notebook-container">
                 <h3>Notebook</h3>
-                <input id="tileName"/>
                 <button id="add-tile-button">Add tile</button>
                 <button id="remove-tile-button">Remove tile</button>
+                <button id="set-output-button">Set Output</button>
+                <button id="save-notebook">Save</button>
                 <P5Wrapper sketch={sketch} ></P5Wrapper>
+                <div className="tile-info">
+                    <p id="tile-name"></p>
+                    <p></p>
+                </div>
             </div>
         )
     }

@@ -102,3 +102,11 @@ div .server-container{
 .health-data{
   height:82%
 }
+.notebook-container{
+  display:flex;
+  flex-direction:column;
+  max-width: 50%;
+}
+.notebook-container button{
+  max-width: 30%;
+}
