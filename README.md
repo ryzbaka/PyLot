@@ -1,4 +1,4 @@
-# ![screenshot](pylotlogo.PNG)
+# ![screenshot](image.png)
 A web based IDE for writing ETL pipelines in Python.
 * <strong>Currently in pre-alpha. ✈</strong>
 ## License ⚖
