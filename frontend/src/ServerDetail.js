@@ -170,7 +170,7 @@ class ServerDetails extends Component {
       });
       return (
         <div className="health-data">
-          <Card style={{ maxHeight: "29%" }}>
+          <Card style={{ maxHeight: "29%" }} className="card-container">
             <CardContent>
               <Typography variant="h5">{this.state.serverName}</Typography>
               <Typography>{this.state.user}</Typography>
@@ -182,30 +182,6 @@ class ServerDetails extends Component {
               </p>
             </CardContent>
           </Card>
-          <TableContainer component={Paper}>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Epoch Time</TableCell>
-                  <TableCell align="right">CPU Usage (%)</TableCell>
-                  <TableCell align="right">Memory Free (bytes)</TableCell>
-                  <TableCell align="right">DiskFree (bytes)</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row, index) => (
-                  <TableRow>
-                    <TableCell component="th" scope="row">
-                      {row.col1}
-                    </TableCell>
-                    <TableCell align="right">{row.col2}</TableCell>
-                    <TableCell align="right">{row.col3}</TableCell>
-                    <TableCell align="right">{row.col4}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
         </div>
       );
     }
