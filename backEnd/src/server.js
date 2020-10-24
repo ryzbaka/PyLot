@@ -171,28 +171,25 @@ app.post("/users/getservers", ({ body: { username, password } }, res) => {
 });
 //================================================================================================================================================================================
 //================================================================================================================================================================================
-app.post(
-  "/health/setupserver",
-  ({ body: { username, serverName } }, res) => {
-    User.findOne({ username: username }).exec(async (err, resultant) => {
-      if (resultant) {
-        const { servers, hash } = resultant;
-        const authenticationSuccessful =true// await bcrypt.compare(password, hash);
-        if (authenticationSuccessful) {
-          const serverIndex = servers
-            .map((el, index) => el.serverName === serverName)
-            .indexOf(true);
-          const { user, password, ipAddr } = servers[serverIndex];
-          const command = await sshInit(user, password, ipAddr, res);
-        } else {
-          res.send("Authentication failed.");
-        }
+app.post("/health/setupserver", ({ body: { username, serverName } }, res) => {
+  User.findOne({ username: username }).exec(async (err, resultant) => {
+    if (resultant) {
+      const { servers, hash } = resultant;
+      const authenticationSuccessful = true; // await bcrypt.compare(password, hash);
+      if (authenticationSuccessful) {
+        const serverIndex = servers
+          .map((el, index) => el.serverName === serverName)
+          .indexOf(true);
+        const { user, password, ipAddr } = servers[serverIndex];
+        const command = await sshInit(user, password, ipAddr, res);
       } else {
-        res.send("User not found.");
+        res.send("Authentication failed.");
       }
-    });
-  }
-);
+    } else {
+      res.send("User not found.");
+    }
+  });
+});
 //================================================================================================================================================================================
 //================================================================================================================================================================================
 //~~END OF DB OPERATIONS
@@ -212,21 +209,24 @@ async function sshInit(username, password, host, res) {
   let log = "";
   conn.on("ready", () => {
     log += "\nPyLot connected to user's remote server\n";
-    conn.exec("git clone https://github.com/ryzbaka/PyLotHealthReportingServicePayload.git;cd PyLotHealthReportingServicePayload;npm i;npx forever start healthMonitor.js", (err, stream) => {
-      if (err) {
-        log += "\nCommand execution failed\n";
+    conn.exec(
+      "git clone https://github.com/ryzbaka/PyLotHealthReportingServicePayload.git;cd PyLotHealthReportingServicePayload;npm i;npx forever start healthMonitor.js",
+      (err, stream) => {
+        if (err) {
+          log += "\nCommand execution failed\n";
+        }
+        stream.stdout.on("data", (data) => {
+          log += `\n***\n STDOUT : \n${data.toString()}\n***`;
+        });
+        stream.stderr.on("data", (data) => {
+          log += `\n***\n STDERR : \n${data.toString()}\n***`;
+        });
+        stream.on("close", () => {
+          log += "\nConnection closed from server\n";
+          conn.end();
+        });
       }
-      stream.stdout.on("data", (data) => {
-        log += `\n***\n STDOUT : \n${data.toString()}\n***`;
-      });
-      stream.stderr.on("data", (data) => {
-        log += `\n***\n STDERR : \n${data.toString()}\n***`;
-      });
-      stream.on("close", () => {
-        log += "\nConnection closed from server\n";
-        conn.end();
-      });
-    });
+    );
   });
   conn.on("end", () => {
     log += "\nDisconnected to server.\n";

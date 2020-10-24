@@ -6,8 +6,8 @@ const Home = () => {
   //return <div>{signInState.status}</div>;
   if (signInState[0] === "Signed Out") {
     return (
-      <div>
-        <h1>PyLot Banner</h1>
+      <div className="server-page-container">
+        <img src="https://i.ibb.co/27hZ9sY/image.png" alt="image" border="0"></img>
       </div>
     );
   } else {
