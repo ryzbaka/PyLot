@@ -42,43 +42,47 @@ const Signup = () => {
           verifyDetails();
         }}
       >
-        <label htmlFor="first-name">
+        <label htmlFor="first-name" className="teal-text text-accent-3">
           First Name
           <input
             id="first-name"
             value={firstName}
             placeholder="First Name"
             onChange={(event) => setFirstName(event.target.value)}
+            className="teal-text text-accent-3"
           />
         </label>
-        <label htmlFor="last-name">
+        <label htmlFor="last-name" className="teal-text text-accent-3">
           Last Name
           <input
             id="last-name"
             value={lastName}
             placeholder="Last Name"
             onChange={(event) => setLastName(event.target.value)}
+            className="teal-text text-accent-3"
           />
         </label>
-        <label htmlFor="username">
+        <label htmlFor="username" className="teal-text text-accent-3">
           Username
           <input
             id="username"
             value={username}
             placeholder="username"
             onChange={(event) => setUsername(event.target.value)}
+            className="teal-text text-accent-3"
           />
         </label>
-        <label htmlFor="email">
+        <label htmlFor="email" className="teal-text text-accent-3">
           E-mail
           <input
             id="email"
             value={email}
             placeholder="email"
             onChange={(event) => setEmail(event.target.value)}
+            className="teal-text text-accent-3"
           />
         </label>
-        <label htmlFor="password">
+        <label htmlFor="password" className="teal-text text-accent-3">
           Password
           <input
             id="password"
@@ -86,9 +90,10 @@ const Signup = () => {
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
+            className="teal-text text-accent-3"
           />
         </label>
-        <label htmlFor="password2">
+        <label htmlFor="password2" className="teal-text text-accent-3">
           Re-Type Password
           <input
             id="password2"
@@ -96,9 +101,10 @@ const Signup = () => {
             type="password"
             value={password2}
             onChange={(event) => setPassword2(event.target.value)}
+            className="teal-text text-accent-3"
           />
         </label>
-        <button>submit</button>
+        <button className="teal accent-3"><span className="white-text">submit</span></button>
       </form>
     </div>
   );

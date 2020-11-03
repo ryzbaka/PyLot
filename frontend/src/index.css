@@ -30,7 +30,7 @@ html,body{
   flex-direction: row;
 }
 .side-container{
-  background:lightseagreen;
+  background:#42f5bf;
   width:10%;
   display:flex;
   color:white;
@@ -105,7 +105,15 @@ div .server-container{
 .notebook-container button{
   max-width: 30%;
 }
-.server-page-container img{
+.banner-container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction:row;
+  color:#42f5bf;
+  font-size: 20%;
+}
+.banner-container img{
   height:30%;
   width:45%;
 }

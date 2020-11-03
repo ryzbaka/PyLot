@@ -5,8 +5,8 @@ const sketch = (p) => {
   const setOutputButton = document.querySelector("#set-output-button");
   const saveNotebookButton = document.querySelector("#save-notebook");
   let noteBook;
-  let canvasWidth = p.windowWidth / 1.25;
-  let canvasHeight = p.windowHeight / 1.4;
+  let canvasWidth = p.windowWidth / 1.12;
+  let canvasHeight = p.windowHeight / 1.7;
   class Tile {
     constructor(name, canvasWidth, canvasHeight) {
       this.information = {
@@ -15,8 +15,8 @@ const sketch = (p) => {
         canvasHeight: canvasHeight,
         xPos: canvasWidth / 2,
         yPos: canvasHeight / 2,
-        tileWidth: 160,
-        tileHeight: 80,
+        tileWidth: canvasWidth/10,
+        tileHeight: canvasHeight/10,
         outputs: [],
       };
     }

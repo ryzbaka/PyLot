@@ -36,35 +36,39 @@ const AddServer=()=>{
                  verifyAndSendDetails()
              }}
             >
-                <label htmlFor="serverName">
+                <label htmlFor="serverName" className="teal-text text-accent-3">
                 Server Name
                 <input 
                     id="serverName"
                     onChange={(event)=>setServerName(event.target.value)}
+                    className="teal-text text-accent-3"
                 />
                 </label>
-                <label htmlFor="ipAddress">
+                <label htmlFor="ipAddress" className="teal-text text-accent-3">
                 IP Address
                 <input 
                     id="ipAddress"
                     onChange={(event)=>setIpAddr(event.target.value)}
+                    className="teal-text text-accent-3"
                 />
                 </label>
-                <label htmlFor="serverUser">
+                <label htmlFor="serverUser" className="teal-text text-accent-3">
                 User account on server
                 <input 
                     id="serverUser"
                     onChange={(event)=>setServerUser(event.target.value)}
+                    className="teal-text text-accent-3"
                 />
                 </label>
-                <label htmlFor="serverPassword">
+                <label htmlFor="serverPassword" className="teal-text text-accent-3">
                 Password for server user account
                 <input 
                     id="serverPassword"
                     onChange={(event)=>setServerPassword(event.target.value)}
+                    className="teal-text text-accent-3"
                 />
                 </label>
-                <button>Submit</button>
+                <button className="teal accent-3"><span className="white-text">submit</span></button>
             </form>
         </div>
     )

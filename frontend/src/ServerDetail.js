@@ -68,7 +68,7 @@ class ServerDetails extends Component {
   render() {
     if (this.state.loading) {
       return (
-        <div className="serverDetailsPageMainContainer">
+        <div className="serverDetailsPageMainContainer ">
           <CircularProgress />
         </div>
       );
@@ -144,19 +144,19 @@ class ServerDetails extends Component {
                   : "Health reporting service is offline on remote server 😢"}
               </Typography>
               <p
-                className="waves-effect btn remove-server"
+                className="waves-effect btn remove-server teal accent-3"
                 onClick={RemoveServer}
               >
                 REMOVE SERVER
               </p>
               <p
-                className="waves-effect btn remove-server"
+                className="waves-effect btn remove-server teal accent-3"
                 onClick={startHealthReportingService}
               >
                 Setup Health Reporting Service
               </p>
               <p
-                className="waves-effect btn remove-server"
+                className="waves-effect btn remove-server teal accent-3"
                 onClick={openTerminal}
               >
                 Open Terminal
