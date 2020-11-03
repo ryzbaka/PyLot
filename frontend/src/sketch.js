@@ -67,13 +67,14 @@ const sketch = (p) => {
         tileHeight,
       } = this.information;
       p.rectMode(p.CENTER);
-      p.fill("darkgrey");
+      p.fill('#42f5bf');//teal fill for tile
       p.rect(xPos, yPos, tileWidth, tileHeight);
       p.stroke("black");
       p.strokeWeight(1);
-      p.point(xPos, yPos);
       p.text(name, xPos - 20, yPos);
+      p.point(xPos, yPos);
       const { outputs } = this.information;
+      p.stroke("white");
       if (outputs.length > 0) {
         outputs.forEach((element, index) => {
           p.line(
