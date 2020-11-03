@@ -104,7 +104,9 @@ const Signup = () => {
             className="teal-text text-accent-3"
           />
         </label>
-        <button className="teal accent-3"><span className="white-text">submit</span></button>
+        <button className="teal accent-3">
+          <span className="white-text">submit</span>
+        </button>
       </form>
     </div>
   );

@@ -117,6 +117,9 @@ class ServerDetails extends Component {
         // alert(`Open new window to ${ipAddr}`)
         navigate("/terminal");
       }
+      function openNotebook() {
+        navigate("/notebook");
+      }
       const { ipAddr } = this.state;
       const healthData = this.state.health;
       console.log(healthData);
@@ -160,6 +163,12 @@ class ServerDetails extends Component {
                 onClick={openTerminal}
               >
                 Open Terminal
+              </p>
+              <p
+                className="waves-effect btn remove-server teal accent-3"
+                onClick={openNotebook}
+              >
+                Open Notebook
               </p>
             </CardContent>
           </Card>

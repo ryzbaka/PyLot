@@ -12,7 +12,9 @@ const Home = () => {
           alt="banner"
           border="0"
         ></img>
-        <p className="flow-text">A web based IDE for writing and scheduling ETL pipelines in Python</p>
+        <p className="flow-text">
+          A web based IDE for writing and scheduling ETL pipelines in Python
+        </p>
       </div>
     );
   } else {

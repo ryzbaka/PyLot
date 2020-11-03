@@ -120,3 +120,11 @@ div .server-container{
 .server-page-controls{
   width:45%;
 }
+.server-page-controls button{
+  background-color:#42f5bf;
+  margin-left: 2%;
+}
+.server-page-controls h2{
+  color:#42f5bf;
+  margin-left: 2%;
+}

@@ -15,8 +15,8 @@ const sketch = (p) => {
         canvasHeight: canvasHeight,
         xPos: canvasWidth / 2,
         yPos: canvasHeight / 2,
-        tileWidth: canvasWidth/10,
-        tileHeight: canvasHeight/10,
+        tileWidth: canvasWidth / 10,
+        tileHeight: canvasHeight / 10,
         outputs: [],
       };
     }
@@ -67,7 +67,7 @@ const sketch = (p) => {
         tileHeight,
       } = this.information;
       p.rectMode(p.CENTER);
-      p.fill('#42f5bf');//teal fill for tile
+      p.fill("#42f5bf"); //teal fill for tile
       p.rect(xPos, yPos, tileWidth, tileHeight);
       p.stroke("black");
       p.strokeWeight(1);

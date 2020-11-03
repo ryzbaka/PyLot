@@ -19,18 +19,14 @@ class Terminal extends Component{
     static contextType=SignInContext;//the sign in context can now be accessed using this.context
     componentDidMount(){
         this.xtermRef.current.terminal.writeln("Welcome to PyLot terminal");
-        if(this.context[0][0]==="Signed Out"){
-            this.xtermRef.current.terminal.writeln("You must be signed in to use the terminal");    
-        }
+        
     }
     render(){
         
         return (
             <div className="terminal-container">
                 <XTerm ref={this.xtermRef} onKey={({key,domEvent})=>{
-                    if(this.context[0][0]==="Signed Out"){
-                        this.xtermRef.current.terminal.writeln("Did not process keystroke. Log in to continue.")                     
-                    }else{
+                    
                         if(domEvent.code==="Enter"){
                             console.log("enter key was pressed.")
                             console.log(`The command issued was ${this.state.command}`)
@@ -39,7 +35,6 @@ class Terminal extends Component{
                             this.state.command+=key
                             this.xtermRef.current.terminal.write(key)
                         }
-                    }
                 }}
                 />
             </div>
@@ -47,11 +42,3 @@ class Terminal extends Component{
     }    
 }
 export default Terminal;
-// if(domEvent.code==="Enter"){
-//     console.log("enter key was pressed.")
-//     console.log(`The command issued was ${this.state.command}`)
-//     this.state.command=[];
-// }else{
-//     this.state.command+=key
-//     this.xtermRef.current.terminal.write(key)
-// }

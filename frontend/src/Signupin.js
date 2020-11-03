@@ -55,7 +55,7 @@ const Signupin = () => {
             to="/signup"
             style={{ textDecoration: "none", color: "#4c5357" }}
           >
-           <span className="teal-text text-accent-3">Sign Up</span>
+            <span className="teal-text text-accent-3">Sign Up</span>
           </Link>
         </form>
       </div>
