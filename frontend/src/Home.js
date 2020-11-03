@@ -7,7 +7,11 @@ const Home = () => {
   if (signInState[0] === "Signed Out") {
     return (
       <div className="server-page-container">
-        <img src="https://i.ibb.co/27hZ9sY/image.png" alt="image" border="0"></img>
+        <img
+          src="https://i.ibb.co/27hZ9sY/image.png"
+          alt="image"
+          border="0"
+        ></img>
       </div>
     );
   } else {

@@ -6,7 +6,7 @@ const sketch = (p) => {
   const saveNotebookButton = document.querySelector("#save-notebook");
   let noteBook;
   let canvasWidth = p.windowWidth / 1.25;
-  let canvasHeight = p.windowHeight / 1.35;
+  let canvasHeight = p.windowHeight / 1.4;
   class Tile {
     constructor(name, canvasWidth, canvasHeight) {
       this.information = {
@@ -163,7 +163,7 @@ const sketch = (p) => {
     }
   });
   saveNotebookButton.addEventListener("click", () => {
-    while (noteBook.name === "Untitled-Notebook" || noteBook.name==null) {
+    while (noteBook.name === "Untitled-Notebook" || noteBook.name == null) {
       const newName = prompt("Please enter name for notebook:");
       noteBook.name = newName;
     }

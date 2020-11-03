@@ -40,23 +40,17 @@ html,body{
   height:100%;
   font-family: monospace;
   font-size: 100%;
-  /* border:1px solid red; */
 }
 div .side-container-content{
  display:flex;
  align-items:center; 
  justify-content: center;
  flex-direction:column;
- /*border:1px solid black;*/
 }
 div .nested-main-container{
   background:white;
   width:90%;
   margin-right:-20px;
-  /*display:flex;
-  align-items: center;
-  justify-content: center;*/
-  /*border:1px solid red;*/
   height:100%;
 }
 .form-page-container{
@@ -103,11 +97,18 @@ div .server-container{
 .health-data{
   height:82%
 }
-.notebook-container{
+  .notebook-container{
   display:flex;
   flex-direction:column;
   max-width: 50%;
 }
 .notebook-container button{
   max-width: 30%;
+}
+.server-page-container img{
+  height:30%;
+  width:45%;
+}
+.server-page-controls{
+  width:45%;
 }

@@ -113,6 +113,11 @@ class ServerDetails extends Component {
           });
         }
       }
+      function openTerminal() {
+        // alert(`Open new window to ${ipAddr}`)
+        navigate("/terminal");
+      }
+      const { ipAddr } = this.state;
       const healthData = this.state.health;
       console.log(healthData);
       const {
@@ -149,6 +154,12 @@ class ServerDetails extends Component {
                 onClick={startHealthReportingService}
               >
                 Setup Health Reporting Service
+              </p>
+              <p
+                className="waves-effect btn remove-server"
+                onClick={openTerminal}
+              >
+                Open Terminal
               </p>
             </CardContent>
           </Card>
