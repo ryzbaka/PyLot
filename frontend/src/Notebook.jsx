@@ -10,7 +10,7 @@ class NotebookDisplay extends Component{
     render(){
         return(
             <div className="notebook-container">
-                <h3>Notebook</h3>
+                <h3 className="teal-text text-accent-3">Notebook</h3>
                 <button id="add-tile-button">Add tile</button>
                 <button id="remove-tile-button">Remove tile</button>
                 <button id="set-output-button">Set Output</button>
