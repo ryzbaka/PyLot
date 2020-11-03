@@ -9,12 +9,19 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
     <title>PyLot</title>
   </head>
   <body>
-    <div id="root" class="root">PyLot Loading</div>
-    <div class="progress">
-      <div class="indeterminate"></div>
-  </div>
+    <div id="root" class="root">
+      <div class="loading-pylot">
+        PyLot Loading
+        <div class="progress">
+          <div class="indeterminate"></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

@@ -33,27 +33,29 @@ const Signupin = () => {
             verifyDetails();
           }}
         >
-          <label htmlFor="username">
+          <label htmlFor="username" className="teal-text text-accent-3">
             Username
             <input
               id="username"
               onChange={(event) => setUsername(event.target.value)}
+              className="teal-text text-accent-3"
             />
           </label>
-          <label htmlFor="password">
+          <label htmlFor="password" className="teal-text text-accent-3">
             Password
             <input
               id="password"
               type="password"
               onChange={(event) => setPassword(event.target.value)}
+              className="teal-text text-accent-3"
             />
           </label>
-          <button>submit</button>
+          <button className="teal white-text accent-3">submit</button>
           <Link
             to="/signup"
             style={{ textDecoration: "none", color: "#4c5357" }}
           >
-            Sign Up
+            <span className="teal-text text-accent-3">Sign Up</span>
           </Link>
         </form>
       </div>

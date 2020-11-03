@@ -6,8 +6,15 @@ const Home = () => {
   //return <div>{signInState.status}</div>;
   if (signInState[0] === "Signed Out") {
     return (
-      <div className="server-page-container">
-        <img src="https://i.ibb.co/27hZ9sY/image.png" alt="image" border="0"></img>
+      <div className="banner-container">
+        <img
+          src="https://i.ibb.co/27hZ9sY/image.png"
+          alt="banner"
+          border="0"
+        ></img>
+        <p className="flow-text">
+          A web based IDE for writing and scheduling ETL pipelines in Python
+        </p>
       </div>
     );
   } else {

@@ -34,7 +34,7 @@ class Profile extends Component{
             const {servers} = this.state;
             return (
                 <div className="server-page-container">
-                    <div>
+                    <div className="server-page-controls">
                         <h2>{this.state.username}'s Servers</h2>
                         <Button
                          variant="contained"

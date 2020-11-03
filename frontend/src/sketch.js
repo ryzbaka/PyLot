@@ -5,8 +5,8 @@ const sketch = (p) => {
   const setOutputButton = document.querySelector("#set-output-button");
   const saveNotebookButton = document.querySelector("#save-notebook");
   let noteBook;
-  let canvasWidth = p.windowWidth / 1.25;
-  let canvasHeight = p.windowHeight / 1.35;
+  let canvasWidth = p.windowWidth / 1.12;
+  let canvasHeight = p.windowHeight / 1.7;
   class Tile {
     constructor(name, canvasWidth, canvasHeight) {
       this.information = {
@@ -15,8 +15,8 @@ const sketch = (p) => {
         canvasHeight: canvasHeight,
         xPos: canvasWidth / 2,
         yPos: canvasHeight / 2,
-        tileWidth: 160,
-        tileHeight: 80,
+        tileWidth: canvasWidth / 10,
+        tileHeight: canvasHeight / 10,
         outputs: [],
       };
     }
@@ -67,13 +67,14 @@ const sketch = (p) => {
         tileHeight,
       } = this.information;
       p.rectMode(p.CENTER);
-      p.fill("darkgrey");
+      p.fill("#42f5bf"); //teal fill for tile
       p.rect(xPos, yPos, tileWidth, tileHeight);
       p.stroke("black");
       p.strokeWeight(1);
-      p.point(xPos, yPos);
       p.text(name, xPos - 20, yPos);
+      p.point(xPos, yPos);
       const { outputs } = this.information;
+      p.stroke("white");
       if (outputs.length > 0) {
         outputs.forEach((element, index) => {
           p.line(
@@ -163,7 +164,7 @@ const sketch = (p) => {
     }
   });
   saveNotebookButton.addEventListener("click", () => {
-    while (noteBook.name === "Untitled-Notebook" || noteBook.name==null) {
+    while (noteBook.name === "Untitled-Notebook" || noteBook.name == null) {
       const newName = prompt("Please enter name for notebook:");
       noteBook.name = newName;
     }
