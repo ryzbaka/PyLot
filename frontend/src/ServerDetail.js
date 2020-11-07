@@ -28,7 +28,7 @@ class ServerDetails extends Component {
     serverName: this.props.serverName,
     ipAddr: this.props.ipAddr,
     columnNames: [],
-    loading: true,
+    loading: false,
     socketRunning: false,
     data: {
       uptime: "🤷‍",
@@ -37,24 +37,6 @@ class ServerDetails extends Component {
       cpuUsage: "🤷‍♂️",
     },
   };
-  componentDidMount() {
-    axios
-      .post("/display", {
-        username: this.state.username,
-        password: this.state.password,
-        user: this.state.user,
-        serverName: this.state.serverName,
-        details: "last10",
-      })
-      .then(({ data }) => {
-        this.setState({
-          health: data,
-          loading: false,
-        });
-      });
-
-    //this.setState({ loading: false });
-  }
   render() {
     if (this.state.loading) {
       return (
@@ -112,14 +94,6 @@ class ServerDetails extends Component {
       }
       const { ipAddr } = this.state;
       const healthData = this.state.health;
-      console.log(healthData);
-      const {
-        Epoch_Time,
-        CPU_Usage_Percent,
-        Memory_Free,
-        Disk_Free,
-      } = healthData;
-      if (Epoch_Time === undefined) {
         return (
           <Card style={{ maxHeight: "30%", minHeight: "50%" }}>
             <CardContent>
@@ -163,37 +137,7 @@ class ServerDetails extends Component {
             </CardContent>
           </Card>
         );
-      }
-      const rows = [];
-      function createData(col1, col2, col3, col4) {
-        return { col1, col2, col3, col4 };
-      }
-      Epoch_Time.forEach((element, index) => {
-        const epochTime = element;
-        const newRow = createData(
-          epochTime,
-          parseFloat(CPU_Usage_Percent[index]),
-          parseFloat(Memory_Free[index]),
-          parseFloat(Disk_Free[index])
-        );
-        rows.push(newRow);
-      });
-      return (
-        <div className="health-data">
-          <Card style={{ maxHeight: "29%" }} className="card-container">
-            <CardContent>
-              <Typography variant="h5">{this.state.serverName}</Typography>
-              <Typography>{this.state.user}</Typography>
-              <p
-                className="waves-effect btn remove-server"
-                onClick={RemoveServer}
-              >
-                REMOVE SERVER
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      );
+      
     }
   }
 }

@@ -1,14 +1,11 @@
-import React, {Component,useState,useContext,useEffect} from "react";
-import SignInContext from "./SignInContext";
+import React,{Component} from "react";
 import axios from "axios";
 import {navigate, Link} from "@reach/router";
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Avatar from "@material-ui/core/Avatar";
 import Divider from '@material-ui/core/Divider';
 import DnsIcon from '@material-ui/icons/Dns';
 import CircularProgress from "@material-ui/core/CircularProgress";
