@@ -1,19 +1,9 @@
 /* eslint-disable no-useless-constructor */
 import React, { Component, setState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Table from "@material-ui/core/Table";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TablePagination from "@material-ui/core/TablePagination";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
 import axios from "axios";
 import { navigate } from "@reach/router";
 import openConnection from "socket.io-client";
@@ -109,13 +99,13 @@ class ServerDetails extends Component {
           };
           axios.post("/health/setupserver", data).then((response) => {
             console.log(response);
-            alert("Done. Refresh page.");
+            alert("Done.");
           });
         }
       }
       function openTerminal() {
         // alert(`Open new window to ${ipAddr}`)
-        navigate("/terminal");
+        navigate(`/terminal/${username}/${serverName}`);
       }
       function openNotebook() {
         navigate("/notebook");

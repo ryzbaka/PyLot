@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const User = require("./models/Users");
 const { Client } = require("ssh2");
+const Users = require("./models/Users");
 const port = 5555;
 const app = express();
 
@@ -210,7 +211,7 @@ async function sshInit(username, password, host, res) {
   conn.on("ready", () => {
     log += "\nPyLot connected to user's remote server\n";
     conn.exec(
-      "git clone https://github.com/ryzbaka/PyLotHealthReportingServicePayload.git;cd PyLotHealthReportingServicePayload;npm i;npx forever start healthMonitor.js",
+      "git clone https://github.com/ryzbaka/PyLotHealthReportingServicePayload.git;cd PyLotHealthReportingServicePayload;npm i;npx forever start server2.js",
       (err, stream) => {
         if (err) {
           log += "\nCommand execution failed\n";
@@ -306,6 +307,33 @@ app.post(
     );
   }
 );
+//================================================================================================================================================================================
+//================================================================================================================================================================================
+app.post("/getIp",({body:{username,serverName}},res)=>{
+  User.findOne({username:username}).exec((err,result)=>{
+    if(err){
+      res.json({message:err})
+    }else{
+      if(result){
+        const {servers}=result;
+        let found="";
+        for(let i=0;i<servers.length;i++){
+          const sName = servers[i].serverName;
+          if(sName===serverName){
+            found = servers[i].ipAddr
+          }
+        }
+        if(found===""){
+          res.json({message:"Server with that name not found."});
+        }else{
+          res.send(found);
+        }
+      }else{
+        res.json({message:"User does not exist."})
+      }
+    }
+  });
+})
 //================================================================================================================================================================================
 //================================================================================================================================================================================
 //================================================================================================================================================================================
