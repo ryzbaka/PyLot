@@ -99,13 +99,13 @@ class ServerDetails extends Component {
           };
           axios.post("/health/setupserver", data).then((response) => {
             console.log(response);
-            alert("Done. Refresh page.");
+            alert("Done.");
           });
         }
       }
       function openTerminal() {
         // alert(`Open new window to ${ipAddr}`)
-        navigate("/terminal");
+        navigate(`/terminal/${username}/${serverName}`);
       }
       function openNotebook() {
         navigate("/notebook");

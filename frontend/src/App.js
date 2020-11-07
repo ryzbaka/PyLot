@@ -41,7 +41,7 @@ const App = () => {
               />
               <Sidebar options={["Home"]} links={["/"]} path="/addServer" />
               <Sidebar options={["Home"]} links={["/"]} path="/notebook" />
-              <Sidebar options={["Home"]} links={["/"]} path="/terminal" />
+              <Sidebar options={["Home"]} links={["/"]} path="/terminal/*" />
             </Router>
           </div>
           <div className="nested-main-container">
@@ -55,7 +55,7 @@ const App = () => {
               <AddServer path="/addServer" />
               <SocketApi path="/testSocket" />
               <NotebookDisplay path="/notebook" />
-              <Terminal path="/terminal" />
+              <Terminal path="/terminal/:username/:serverName" />
             </Router>
           </div>
         </div>
