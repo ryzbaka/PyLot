@@ -6,12 +6,13 @@ to bring the same workflow to the web and make code deployment ready so that you
 to spend hours converting your Jupyter Notbook data processing pipeline to production code that you can schedule to run
 whenever you please while also keeping track of your linux servers that you can access using PyLot's web terminal.
 
-Features:
+Feature Roadmap:
 * Server health monitor. (deployed to production)
 * Web Terminal that connects to your servers. (deployed to production)
 * PyLot Notebook interface (currently in development)
 * Python text editor (currently in development)
 * Pipeline scheduler (currently in development)
+* Electron application
 * <strong>Currently in pre-alpha. ✈</strong>
 ## License ⚖
 * [MIT](https://github.com/ryzbaka/PyLot/blob/master/LICENSE)
