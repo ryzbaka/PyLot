@@ -1,8 +1,8 @@
 # ![screenshot](image.png)
 A web based IDE for writing ETL pipelines in Python.
 
-Writing code for data processing in jupyter nodebooks is currently the standard, PyLot aims
-to bring the same workflow to the web and make code deployment ready so that you don't have
+Writing code for data processing in Jupyter nodebooks is the standard for most Python developers, 
+**PyLot** aims to bring the same workflow to the web and make code deployment ready so that you don't have
 to spend hours converting your Jupyter Notbook data processing pipeline to production code that you can schedule to run
 whenever you please while also keeping track of your linux servers that you can access using PyLot's web terminal.
 
