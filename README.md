@@ -13,7 +13,9 @@ Feature Roadmap:
 * Python text editor (currently in development)
 * Pipeline scheduler (currently in development)
 * Electron application
-* <strong>Currently in pre-alpha. ✈</strong>
+<div>
+  <strong>Currently in pre-alpha. ✈</strong>
+ </div>
 ## License ⚖
 * [MIT](https://github.com/ryzbaka/PyLot/blob/master/LICENSE)
 ## Progress and Documentation ☘
