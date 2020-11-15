@@ -22,7 +22,6 @@ Feature Roadmap:
 * [Trello Board](https://trello.com/b/9zQ3B1nt/pylot-major-project)
 * [Documentation](https://ryzbaka.github.io/PyLot/)
 ## Contributors 👨‍💻
-### Core Contributors 🐱‍🏍
 * [Hamza Ali Rizvi](https://github.com/ryzbaka) 🐱‍👤
 * [Mathew Pius](https://github.com/mathewpius19) 🐱‍🐉
 * [Arihant Chawla](https://github.com/ArihantChawla) 🐱‍👓
