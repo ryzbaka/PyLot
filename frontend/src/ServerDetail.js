@@ -94,50 +94,49 @@ class ServerDetails extends Component {
       }
       const { ipAddr } = this.state;
       const healthData = this.state.health;
-        return (
-          <Card style={{ maxHeight: "30%", minHeight: "50%" }}>
-            <CardContent>
-              <Typography variant="h5">{this.state.serverName}</Typography>
-              <Typography>{this.state.data.operatingSystem}</Typography>
-              <Typography>User: {this.state.user}</Typography>
-              <Typography>Uptime: {this.state.data.uptime}</Typography>
-              <Typography>{this.state.data.cpuUsage}💻</Typography>
-              <Typography>
-                Memory Usage: {this.state.data.memoryUsedPercent}🐏
-              </Typography>
-              <Typography>
-                {this.state.socketRunning
-                  ? "Health Reporting Service is online 🩺"
-                  : "Health reporting service is offline on remote server 😢"}
-              </Typography>
-              <p
-                className="waves-effect btn remove-server teal accent-3"
-                onClick={RemoveServer}
-              >
-                REMOVE SERVER
-              </p>
-              <p
-                className="waves-effect btn remove-server teal accent-3"
-                onClick={startHealthReportingService}
-              >
-                Setup Health Reporting Service
-              </p>
-              <p
-                className="waves-effect btn remove-server teal accent-3"
-                onClick={openTerminal}
-              >
-                Open Terminal
-              </p>
-              <p
-                className="waves-effect btn remove-server teal accent-3"
-                onClick={openNotebook}
-              >
-                Open Notebook
-              </p>
-            </CardContent>
-          </Card>
-        );
-      
+      return (
+        <Card style={{ maxHeight: "30%", minHeight: "50%" }}>
+          <CardContent>
+            <Typography variant="h5">{this.state.serverName}</Typography>
+            <Typography>{this.state.data.operatingSystem}</Typography>
+            <Typography>User: {this.state.user}</Typography>
+            <Typography>Uptime: {this.state.data.uptime}</Typography>
+            <Typography>{this.state.data.cpuUsage}💻</Typography>
+            <Typography>
+              Memory Usage: {this.state.data.memoryUsedPercent}🐏
+            </Typography>
+            <Typography>
+              {this.state.socketRunning
+                ? "Health Reporting Service is online 🩺"
+                : "Health reporting service is offline on remote server 😢"}
+            </Typography>
+            <p
+              className="waves-effect btn remove-server teal accent-3"
+              onClick={RemoveServer}
+            >
+              REMOVE SERVER
+            </p>
+            <p
+              className="waves-effect btn remove-server teal accent-3"
+              onClick={startHealthReportingService}
+            >
+              Setup Health Reporting Service
+            </p>
+            <p
+              className="waves-effect btn remove-server teal accent-3"
+              onClick={openTerminal}
+            >
+              Open Terminal
+            </p>
+            <p
+              className="waves-effect btn remove-server teal accent-3"
+              onClick={openNotebook}
+            >
+              Open Notebook
+            </p>
+          </CardContent>
+        </Card>
+      );
     }
   }
 }

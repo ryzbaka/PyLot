@@ -2,11 +2,12 @@ const sketch = (p) => {
   let current = "None";
   const addTileButton = document.querySelector("#add-tile-button");
   const removeTileButton = document.querySelector("#remove-tile-button");
-  const setOutputButton = document.querySelector("#set-output-button");
+  const bindButton = document.querySelector("#bind-button");
   const saveNotebookButton = document.querySelector("#save-notebook");
   let noteBook;
   let canvasWidth = p.windowWidth / 1.12;
   let canvasHeight = p.windowHeight / 1.7;
+
   class Tile {
     constructor(name, canvasWidth, canvasHeight) {
       this.information = {
@@ -18,21 +19,15 @@ const sketch = (p) => {
         tileWidth: canvasWidth / 10,
         tileHeight: canvasHeight / 10,
         outputs: [],
+        inputs: [],
       };
     }
 
     addOutput(someTile) {
       this.information.outputs.push(someTile);
     }
-    removeOutput(someTileName) {
-      for (let i = 0; i < this.information.outputs.length; i++) {
-        if (this.information.outputs[i].information.name === someTileName) {
-          this.information.outputs.splice(i, 1);
-        }
-      }
-    }
-    flushOutput() {
-      this.information.outputs = [];
+    addInput(someTile) {
+      this.information.inputs.push(someTile);
     }
     show() {
       if (
@@ -111,35 +106,38 @@ const sketch = (p) => {
       });
     }
 
-    setOutput(nodeName, outputTileName) {
-      let node;
-      let outputTile;
-      for (let i = 0; i < this.tiles.length; i++) {
-        if (this.tiles[i].information.name === nodeName) {
-          node = this.tiles[i];
-        } else if (this.tiles[i].information.name === outputTileName) {
-          outputTile = this.tiles[i];
+    bind(nodeName, outputTileName) {
+      const nodeIndex = this.tileNames.indexOf(nodeName);
+      const outputTileIndex = this.tileNames.indexOf(outputTileName);
+      if (nodeIndex === -1 || outputTileIndex === -1) {
+        alert("Invalid tile names");
+      } else {
+        const nodeTile = this.tiles[nodeIndex];
+        const outputTile = this.tiles[outputTileIndex];
+        const alreadyOutput = nodeTile.information.outputs
+          .map((el) => el.information.name)
+          .some((el) => el === outputTileName);
+        if (alreadyOutput) {
+          alert("Tiles already bound.");
+        } else {
+          nodeTile.addOutput(outputTile);
+          outputTile.addInput(nodeTile);
         }
       }
-      node.addOutput(outputTile);
     }
 
     removeTile(tileName) {
-      if (!this.tileNames.includes(tileName)) {
-        alert("Tile does not exist.");
-      } else {
-        this.tiles.forEach((element, index) => {
-          element.removeOutput(tileName);
-        });
-        for (let i = 0; i < this.tiles.length; i++) {
-          if (this.tiles[i].information.name === tileName) {
-            this.tiles[i].flushOutput();
-            this.tiles.splice(i, 1);
-            this.tileNames.splice(i, 1);
-            break;
-          }
-        }
-      }
+      const tileIndex = this.tileNames.indexOf(tileName);
+      this.tileNames.splice(tileIndex, 1);
+      this.tiles.splice(tileIndex, 1);
+      this.tiles.forEach((tile, index) => {
+        tile.information.outputs = tile.information.outputs.filter(
+          (el) => el.information.name !== tileName
+        );
+        tile.information.inputs = tile.information.inputs.filter(
+          (el) => el.information.name !== tileName
+        );
+      });
     }
   }
 
@@ -151,7 +149,7 @@ const sketch = (p) => {
     const name = prompt();
     noteBook.removeTile(name, canvasWidth, canvasHeight);
   });
-  setOutputButton.addEventListener("click", () => {
+  bindButton.addEventListener("click", () => {
     const tile1 = prompt("Enter name of input tile:");
     const tile2 = prompt("Enter name of output tile:");
     if (
@@ -160,7 +158,7 @@ const sketch = (p) => {
     ) {
       alert("One of the two tile names entered does not exist.");
     } else {
-      noteBook.setOutput(tile1, tile2);
+      noteBook.bind(tile1, tile2);
     }
   });
   saveNotebookButton.addEventListener("click", () => {

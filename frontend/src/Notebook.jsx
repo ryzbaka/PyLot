@@ -13,7 +13,7 @@ class NotebookDisplay extends Component{
                 <h3 className="teal-text text-accent-3">Notebook</h3>
                 <button id="add-tile-button">Add tile</button>
                 <button id="remove-tile-button">Remove tile</button>
-                <button id="set-output-button">Set Output</button>
+                <button id="bind-button">Bind Tiles</button>
                 <button id="save-notebook">Save Notebook</button>
                 <P5Wrapper sketch={sketch} ></P5Wrapper>
                 <div className="tile-info">
