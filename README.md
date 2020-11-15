@@ -28,6 +28,3 @@ Feature Roadmap:
 * [Arihant Chawla](https://github.com/ArihantChawla) 🐱‍👓
 * [Deekshant Hooda](https://github.com/dk-blackops) 🐱‍🚀
 * [Naman Gupta](https://github.com/ngnammu) 🐱‍💻
-### Hacktoberfest Contributors 👨‍💻👩‍💻
-* [Matt Stewardson](https://github.com/MSTEWARDSON)
-* [nk183](https://github.com/nk183)
