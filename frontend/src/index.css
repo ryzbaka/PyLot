@@ -128,3 +128,7 @@ div .server-container{
   color:#42f5bf;
   margin-left: 2%;
 }
+.editor-space{
+  height:100%;
+  border:2px solid transparent;
+}

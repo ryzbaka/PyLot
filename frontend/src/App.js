@@ -12,6 +12,7 @@ import AddServer from "./AddServer";
 import SocketApi from "./Api.jsx";
 import NotebookDisplay from "./Notebook.jsx";
 import Terminal from "./Terminal.jsx";
+import Editor from "./Editor";
 
 const App = () => {
   const signedStateHook = useState(["Signed Out", "None", "None"]); //maybe add a dictionary similar to the one in SignInContext.js
@@ -56,6 +57,7 @@ const App = () => {
               <SocketApi path="/testSocket" />
               <NotebookDisplay path="/notebook" />
               <Terminal path="/terminal/:username/:serverName" />
+              <Editor path="/editor" />
             </Router>
           </div>
         </div>

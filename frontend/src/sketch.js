@@ -5,8 +5,8 @@ const sketch = (p) => {
   const bindButton = document.querySelector("#bind-button");
   const saveNotebookButton = document.querySelector("#save-notebook");
   let noteBook;
-  let canvasWidth = p.windowWidth / 1.12;
-  let canvasHeight = p.windowHeight / 1.7;
+  let canvasWidth = p.windowWidth / 1.15;
+  let canvasHeight = p.windowHeight / 1.35;
 
   class Tile {
     constructor(name, canvasWidth, canvasHeight) {
@@ -140,7 +140,6 @@ const sketch = (p) => {
       });
     }
   }
-
   addTileButton.addEventListener("click", () => {
     const name = prompt();
     noteBook.addTile(name, canvasWidth, canvasHeight);
