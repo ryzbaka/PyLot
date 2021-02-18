@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const sketch = (p) => {
   let current = "None";
   const addTileButton = document.querySelector("#add-tile-button");
@@ -18,16 +20,21 @@ const sketch = (p) => {
         yPos: canvasHeight / 2,
         tileWidth: canvasWidth / 10,
         tileHeight: canvasHeight / 10,
-        outputs: [],
-        inputs: [],
+        // outputs: [],
+        // inputs: [],
+        outputTileNames:[],
+        inputTileNames:[],
+        code: "",
       };
     }
 
     addOutput(someTile) {
-      this.information.outputs.push(someTile);
+      // this.information.outputs.push(someTile);
+      this.information.outputTileNames.push(someTile.information.name);
     }
     addInput(someTile) {
-      this.information.inputs.push(someTile);
+      // this.information.inputs.push(someTile);
+      this.information.inputTileNames.push(someTile.information.name);
     }
     show() {
       if (
@@ -60,6 +67,7 @@ const sketch = (p) => {
         canvasHeight,
         tileWidth,
         tileHeight,
+        outputTileNames
       } = this.information;
       p.rectMode(p.CENTER);
       p.fill("#42f5bf"); //teal fill for tile
@@ -70,15 +78,23 @@ const sketch = (p) => {
       p.point(xPos, yPos);
       const { outputs } = this.information;
       p.stroke("white");
-      if (outputs.length > 0) {
-        outputs.forEach((element, index) => {
+      
+      if(outputTileNames.length > 0){
+        // console.log(noteBook);
+        outputTileNames.forEach((outputTileName,index)=>{
+          let outputTile;
+          for(let i=0;i<noteBook.tiles.length;i++){
+            if(noteBook.tiles[i].information.name===outputTileName){
+              outputTile = noteBook.tiles[i];
+            }
+          }
           p.line(
-            xPos + tileWidth / 2,
-            yPos,
-            element.information.xPos - tileWidth / 2,
-            element.information.yPos
+           xPos+tileWidth/2,
+           yPos,
+           outputTile.information.xPos - tileWidth/2,
+           outputTile.information.yPos 
           );
-        });
+        })
       }
     }
   }
@@ -88,10 +104,15 @@ const sketch = (p) => {
       this.name = "Untitled-Notebook";
       this.tiles = [];
       this.tileNames = [];
+      // localStorage.setItem("test","sketch set this value")
     }
 
     addTile(name, canvasWidth, canvasHeight) {
-      if (this.tileNames.includes(name)) {
+      // console.log(name);
+      if(!name){
+        console.log("No name added to tile.")
+      }
+      else if (this.tileNames.includes(name)) {
         alert("Tile already exists, cannot create tile.");
       } else {
         const newTile = new Tile(name, canvasWidth, canvasHeight);
@@ -114,9 +135,11 @@ const sketch = (p) => {
       } else {
         const nodeTile = this.tiles[nodeIndex];
         const outputTile = this.tiles[outputTileIndex];
-        const alreadyOutput = nodeTile.information.outputs
-          .map((el) => el.information.name)
-          .some((el) => el === outputTileName);
+        // const alreadyOutput = nodeTile.information.outputs
+        //   .map((el) => el.information.name)
+        //   .some((el) => el === outputTileName);
+        const alreadyOutput = nodeTile.information.outputTileNames
+                              .some(el=>outputTileName)
         if (alreadyOutput) {
           alert("Tiles already bound.");
         } else {
@@ -131,21 +154,23 @@ const sketch = (p) => {
       this.tileNames.splice(tileIndex, 1);
       this.tiles.splice(tileIndex, 1);
       this.tiles.forEach((tile, index) => {
-        tile.information.outputs = tile.information.outputs.filter(
-          (el) => el.information.name !== tileName
+        tile.information.outputTileNames = tile.information.outputTileNames.filter(
+          // (el) => el.information.name !== tileName
+          (el)=>el!==tileName
         );
-        tile.information.inputs = tile.information.inputs.filter(
-          (el) => el.information.name !== tileName
-        );
+        tile.information.inputTileNames = tile.information.inputTileNames.filter(
+          // (el) => el.information.name !== tileName
+          (el)=>el!==tileName
+          );
       });
     }
   }
   addTileButton.addEventListener("click", () => {
-    const name = prompt();
+    const name = prompt("Enter name of new tile:");
     noteBook.addTile(name, canvasWidth, canvasHeight);
   });
   removeTileButton.addEventListener("click", () => {
-    const name = prompt();
+    const name = prompt("Enter name of the tile you wish to remove:");
     noteBook.removeTile(name, canvasWidth, canvasHeight);
   });
   bindButton.addEventListener("click", () => {
@@ -162,15 +187,20 @@ const sketch = (p) => {
   });
   saveNotebookButton.addEventListener("click", () => {
     while (noteBook.name === "Untitled-Notebook" || noteBook.name == null) {
-      const newName = prompt("Please enter name for notebook:");
-      noteBook.name = newName;
+      const newName = window.location.href.split("/")[window.location.href.split("/").length-1];
+      noteBook.name = newName; 
     }
+    const username = window.location.href.split("/")[window.location.href.split("/").length-2];
+    axios.post("/users/test",{notebook:noteBook,user:username})
+    .then(({data:{message}})=>console.log(message));
+    //This function is where all the communication with server takes place.
     console.log(noteBook);
   });
   p.setup = () => {
     p.createCanvas(canvasWidth, canvasHeight);
     p.background("grey");
   };
+
   p.mouseReleased = () => {
     current = "None";
   };

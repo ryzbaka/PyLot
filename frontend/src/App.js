@@ -10,9 +10,12 @@ import ServerDetails from "./ServerDetail.js";
 import Logout from "./Logout.js";
 import AddServer from "./AddServer";
 import SocketApi from "./Api.jsx";
-import NotebookDisplay from "./Notebook.jsx";
+import Notebook from "./Notebook.jsx";
 import Terminal from "./Terminal.jsx";
 import Editor from "./Editor";
+import NotebooksDisplay from "./NotebooksDisplay"
+import AddNotebook from "./AddNotebook.js";
+import DeleteNotebook from "./DeleteNotebook.js"
 
 const App = () => {
   const signedStateHook = useState(["Signed Out", "None", "None"]); //maybe add a dictionary similar to the one in SignInContext.js
@@ -43,6 +46,9 @@ const App = () => {
               <Sidebar options={["Home"]} links={["/"]} path="/addServer" />
               <Sidebar options={["Home"]} links={["/"]} path="/notebook" />
               <Sidebar options={["Home"]} links={["/"]} path="/terminal/*" />
+              <Sidebar options={["Home"]} links={["/"]} path="/notebooks/*"/>
+              <Sidebar options={["Home"]} links={["/"]} path="/addNotebook" />
+              <Sidebar options={["Home"]} links={["/"]} path="/deleteNotebook" />
             </Router>
           </div>
           <div className="nested-main-container">
@@ -55,9 +61,12 @@ const App = () => {
               <Logout path="/logout" />
               <AddServer path="/addServer" />
               <SocketApi path="/testSocket" />
-              <NotebookDisplay path="/notebook" />
+              <Notebook path="/notebooks/:username/:notebookName" />
               <Terminal path="/terminal/:username/:serverName" />
-              <Editor path="/editor" />
+              <Editor path="/editor/"/>
+              <NotebooksDisplay path="/notebooks/:username"/>
+              <AddNotebook path="/addNotebook" />
+              <DeleteNotebook path="/deleteNotebook" />
             </Router>
           </div>
         </div>

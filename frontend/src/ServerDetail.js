@@ -90,7 +90,7 @@ class ServerDetails extends Component {
         navigate(`/terminal/${username}/${serverName}`);
       }
       function openNotebook() {
-        navigate("/notebook");
+        navigate(`/notebooks/${username}`);
       }
       const { ipAddr } = this.state;
       const healthData = this.state.health;
@@ -132,7 +132,7 @@ class ServerDetails extends Component {
               className="waves-effect btn remove-server teal accent-3"
               onClick={openNotebook}
             >
-              Open Notebook
+              Notebooks
             </p>
           </CardContent>
         </Card>

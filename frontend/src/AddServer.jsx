@@ -21,7 +21,7 @@ const AddServer=()=>{
             password:serverPassword
         }
         axios.post("/users/addserver",formData).then((response)=>{
-            if(response.data==="Added server."){
+            if(response.data==="Added server." || response.data==="Added user's first server!"){
                 navigate('/')
             }else{
                 alert("An error ocurred");

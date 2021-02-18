@@ -132,3 +132,11 @@ div .server-container{
   height:100%;
   border:2px solid transparent;
 }
+.notebooks-container{
+ background-color:white;
+  height:100%;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}

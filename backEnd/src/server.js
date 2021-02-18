@@ -21,7 +21,7 @@ require("dotenv").config({ path: path.join(__dirname, ".env") });
 app.post(
   "/users/signup",
   async ({ body: { firstName, lastName, username, password, email } }, res) => {
-    User.findOne({ username: username }, "username").then((resultant) => {
+    User.findOne({ username: username }, "username").exec((resultant) => {
       if (resultant) {
         res.send("Username already exists!");
       } else {
@@ -47,16 +47,6 @@ app.post(
 );
 //================================================================================================================================================================================
 //================================================================================================================================================================================
-/*app.post("/users/signin", ({ body: { username, password } }, res) => {
-  User.findOne({ username: username }, "username hash")
-    .then(async ({ hash }) => {
-      const result = await bcrypt.compare(password, hash);
-      result
-        ? res.send("Authentication Successful")
-        : res.send("Authenication Failed");
-    })
-    .catch((err) => res.send(err));    REMOVE THIS COMMENTED CODE ONCE VERIFIED FRONTEND FUNCTIONALITY.
-});*/
 app.post("/users/signin", ({ body: { username, password } }, res) => {
   User.findOne({ username: username }, "username hash").exec(
     async (err, result) => {
@@ -335,6 +325,113 @@ app.post("/getIp",({body:{username,serverName}},res)=>{
   });
 })
 //================================================================================================================================================================================
+//~~Notebook CRUD/Operations~
+//================================================================================================================================================================================
+app.post("/users/test",({body:{notebook,user}},res)=>{ //rename this to save notebook.
+  //this saves a notebook DAG to MongoDB.
+  User.findOne({username:user}).exec((err,result)=>{
+    if(err){
+      res.send({message:"error connecting to PyLot database."})
+    }else{
+      if(result){
+        for(let i=0;i<result.notebooks.length;i++){
+          if(result.notebooks[i].notebookName==notebook.name){
+            result.notebooks[i].data = notebook;
+          }
+        }
+        console.log(result)
+        result.save();
+        res.send({message:"Found user with that notebook."})
+      }else{
+        res.send({message:"That username does not exist."})
+      }
+    }
+  })
+})
+
+app.post("/addNotebook",({body:{username,name}},res)=>{
+  User.findOne({username:username}).exec((err,result)=>{
+    if(err){
+      res.json({message:"Query error."})
+    }
+    else{
+      if(result){
+        const {notebooks} = result;
+        const notebookObject ={
+          notebookName:name,
+          createdOn:new Date().toString()
+        }
+        const alreadyExists = notebooks.map(({notebookName})=>notebookName===name).some(el=>el);
+        if(alreadyExists){
+          res.json({message:"Notebook with that name already exists."})
+        }else{
+          result.notebooks.push(notebookObject);
+          // console.log(result);
+          result.save();
+          res.json({message:`Added notebook with name ${name}`});
+        }
+      }else{
+        res.json({message:"Invalid username."})
+      }
+    }
+  })
+})
+app.post("/getNotebooks",({body:{username}},res)=>{
+  User.findOne({username:username}).exec((err,result)=>{
+    if(err){
+      res.json({message:"Query error."})
+    }else{
+      if(result){
+        res.json({notebooks:result.notebooks})
+      }else{
+        res.json({message:"Invalid username."})
+      }
+    }
+  })
+})
+app.post("/deleteNotebook",({body:{username,name}},res)=>{
+  //backend working fine.
+  //test frontend.
+  User.findOne({username:username}).exec((err,resultant)=>{
+    if(err){
+      res.send({message:"Database error."})
+    }else{
+      if(resultant){
+        let targetIndex=null;
+        for(let i=0;i<resultant.notebooks.length;i++){
+          // console.log(resultant.notebooks[i].notebookName+" "+name);
+          if(resultant.notebooks[i].notebookName===name){
+            targetIndex = i;
+          }  
+        }
+        if(targetIndex!=null){
+        resultant.notebooks.splice(targetIndex,1);
+        resultant.save();
+        res.send({message:`Deleted ${username}'s notebook : ${name}`})
+        }else{
+          res.send({message:"Notebook with that name does not exist"})
+        }
+      }else{
+        res.send({message:"That username does not exist"})
+      }
+    }
+  })
+})
+app.post('/deleteAllNotebooks',({body:{username}},res)=>{
+  User.findOne({username:username}).exec((err,result)=>{
+    if(err){
+      res.json({message:"Query Error"});  
+    }else if(result){
+      result.notebooks=[]
+      result.save();
+      res.json({message:"Deleted all notebooks."})
+    }else{
+      res.json({message:"Invalid username."})
+    }
+  })
+})
+//================================================================================================================================================================================
+//~End of notebook CRUD/Operations
 //================================================================================================================================================================================
 //================================================================================================================================================================================
 //~CONNECTIING TO MONGODB SERVER
@@ -347,7 +444,7 @@ mongoose
   .then(() => console.log("Connected to MongoDB cluster..."))
   .catch((err) => console.error(err));
 //================================================================================================================================================================================
-//~ STARTTING NODE JS SERVER AND SETTING TO LISTEN ON PORT
+//~ STARTING NODE JS SERVER AND SETTING TO LISTEN ON PORT
 //================================================================================================================================================================================
 const server = app.listen(port, () => {
   console.log(`listening on port ... ${port}`);

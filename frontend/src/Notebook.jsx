@@ -4,18 +4,25 @@ import React, {Component} from "react";
 import P5Wrapper from "react-p5-wrapper";
 import sketch from "./sketch.js";
 
-class NotebookDisplay extends Component{
-    constructor(props){
-        super(props)
+class Notebook extends Component{
+    state = {
+        username:this.props.username,
+        notebookName:this.props.notebookName
     }
     editTileHandler(){
         const name = prompt("Enter name of tile you want to edit");
-        navigate("/editor");
+        if(localStorage.length===0){
+            alert('save notebook before proceeding.')
+        }else{
+            console.log(JSON.retrocycle(JSON.parse(localStorage.getItem('tester'))))
+        }
     }
     render(){
+        const username = this.state.username;
+        const notebookName = this.state.notebookName;
         return(
             <div className="notebook-container">
-                <h3 className="teal-text text-accent-3">Notebook</h3>
+                <h3 className="teal-text text-accent-3">{username}'s Notebook [{notebookName}]</h3>
                 <div id="notebook-buttons-container">
                 <button id="add-tile-button">Add tile</button>
                 <button id="remove-tile-button">Remove tile</button>
@@ -32,4 +39,4 @@ class NotebookDisplay extends Component{
         )
     }
 }
-export default NotebookDisplay;
+export default Notebook;

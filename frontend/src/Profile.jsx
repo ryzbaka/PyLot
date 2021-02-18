@@ -10,6 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import DnsIcon from '@material-ui/icons/Dns';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import AddIcon from '@material-ui/icons/Add';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 class Profile extends Component{
     state = {username:this.props.username,password:this.props.password,servers:[],loading:true};
     componentDidMount(){
@@ -40,6 +41,14 @@ class Profile extends Component{
                          onClick={()=>{navigate("/addServer")}}
                         >
                             Add Server
+                        </Button>
+                        <Button
+                         variant="contained"
+                         color="seagreen"
+                         startIcon={<MenuBookIcon/>}
+                         onClick={()=>{navigate(`/notebooks/${this.state.username}`)}}
+                        >
+                            Notebooks
                         </Button>
                     </div>
                     <div className="servers-container">

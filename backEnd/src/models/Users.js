@@ -40,6 +40,35 @@ const UsersSchema = mongoose.Schema({
       },
     },
   ],
+  
+ notebooks:
+ [
+   {
+     notebookName:String, //name of the notebook
+     server:String, // server associated with the notebook
+     createdOn:String,
+     data:{
+        name :String, //name of the notebook.
+        tileNames:[String], //array contains names of the tiles in the notebook.
+        tiles:[ //array consists of an objects with one key 'information' that maps to another object.
+          {
+            information:{
+              canvasHeight: Number, //height of the canvas
+              canvasWidth: Number, //width of the canvas
+              code: String, // code string.
+              inputTileNames: [String], 
+              name: String, //name of the tile
+              outputTileNames: [String],
+              tileHeight: Number,
+              tileWidth: Number,
+              xPos: Number,
+              yPos: Number
+            }
+          }
+        ]
+      }
+   }
+ ]
 });
 
 module.exports = mongoose.model("Users", UsersSchema);
