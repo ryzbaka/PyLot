@@ -327,7 +327,43 @@ app.post("/getIp",({body:{username,serverName}},res)=>{
 //================================================================================================================================================================================
 //~~Notebook CRUD/Operations~
 //================================================================================================================================================================================
-app.post("/users/test",({body:{notebook,user}},res)=>{ //rename this to save notebook.
+app.post("/loadNotebook",({body:{notebook,user}},res)=>{
+  console.log(`Requested ${user}'s notebook: ${notebook}`);
+  User.findOne({username:user}).exec((err,result)=>{
+    if(err){
+      res.send({message:"Database connection error.",data:{}})
+    }else{
+      if(result){
+        let targetIndex=null;
+        for(let i=0;i<result.notebooks.length;i++){
+          // console.log(notebook)
+          // console.log(result.notebooks[i].data.name)
+          if(result.notebooks[i].notebookName==notebook){
+            targetIndex = i;
+          }
+          console.log(result.notebooks[i].notebookName)
+          console.log(notebook);
+          console.log(notebook ===result.notebooks[i].notebookName)
+        }
+        console.log(targetIndex)
+        //get rid of these console.logs later.
+        if(targetIndex===null){
+          res.send({message:"Notebook not found.",data:{}})
+        }else{
+          res.send(
+            {
+              message:"Notebook found.",
+              data:result.notebooks[targetIndex].data
+            }
+          )
+        }
+      }else{
+        res.send({message:"Username not found.",data:{}})
+      }
+    }
+  })
+})
+app.post("/users/test",({body:{notebook,user}},res)=>{ //rename this to /saveNotebook.
   //this saves a notebook DAG to MongoDB.
   User.findOne({username:user}).exec((err,result)=>{
     if(err){

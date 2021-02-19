@@ -10,12 +10,9 @@ class Notebook extends Component{
         notebookName:this.props.notebookName
     }
     editTileHandler(){
-        const name = prompt("Enter name of tile you want to edit");
-        if(localStorage.length===0){
-            alert('save notebook before proceeding.')
-        }else{
-            console.log(JSON.retrocycle(JSON.parse(localStorage.getItem('tester'))))
-        }
+        alert("Under development.")
+        //this handler has to relocate to a text editor where user can edit code
+        //inside a tile.
     }
     render(){
         const username = this.state.username;

@@ -10,6 +10,9 @@ const sketch = (p) => {
   let canvasWidth = p.windowWidth / 1.15;
   let canvasHeight = p.windowHeight / 1.35;
 
+  const notebookName = window.location.href.split("/")[window.location.href.split("/").length-1];
+  const username = window.location.href.split("/")[window.location.href.split("/").length-2];
+
   class Tile {
     constructor(name, canvasWidth, canvasHeight) {
       this.information = {
@@ -196,11 +199,57 @@ const sketch = (p) => {
     //This function is where all the communication with server takes place.
     console.log(noteBook);
   });
+  let loadNotebook;
+  p.preload = ()=>{
+    axios.post("/loadNotebook",{notebook:notebookName,user:username}).then(({data:{message,data}})=>{
+      if(message==="Database connection error." || message==="Username not found." || message==="Notebook not found."){
+        alert(message);
+        loadNotebook = false;
+      }else{
+        // console.log("data");
+        // console.log(data);
+        const notebookName = data.name;
+        const notebookTileNames = data.tileNames;
+        const notebookTiles = [];
+        if(notebookTileNames.length===0){
+          console.log("Empty notebook, no data to load.")
+          loadNotebook = false;
+        }else{
+          //POPULATING A NOTEBOOK OBJECT.
+          // console.log(data.tiles);
+          for(let i=0;i<data.tiles.length;i++){
+            // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            // console.log(data.tiles[i].information);
+            const tileInfo = data.tiles[i].information;
+            const newTile = new Tile(tileInfo.name,tileInfo.canvasWidth,tileInfo.canvasHeight);
+            newTile.information.code = tileInfo.code;
+            newTile.information.inputTileNames = tileInfo.inputTileNames;
+            newTile.information.outputTileNames = tileInfo.outputTileNames;
+            newTile.information.tileHeight = tileInfo.tileHeight;
+            newTile.information.tileWidth = tileInfo.tileWidth;
+            newTile.information.xPos = tileInfo.xPos;
+            newTile.information.yPos = tileInfo.yPos;
+            // console.log(newTile);
+            // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            notebookTiles.push(newTile);
+          }
+          // console.log(notebookTiles);
+          noteBook = new Notebook();
+          noteBook.name = notebookName;
+          noteBook.tileNames = notebookTileNames;
+          noteBook.tiles = notebookTiles;
+          loadNotebook=true;         
+        }
+      }
+    });  
+  }
   p.setup = () => {
     p.createCanvas(canvasWidth, canvasHeight);
     p.background("grey");
+    if(!loadNotebook){
+      noteBook = new Notebook();
+    }
   };
-
   p.mouseReleased = () => {
     current = "None";
   };
@@ -208,6 +257,5 @@ const sketch = (p) => {
     p.background(220);
     noteBook.display();
   };
-  noteBook = new Notebook();
 };
 export default sketch;
