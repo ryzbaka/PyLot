@@ -327,8 +327,59 @@ app.post("/getIp",({body:{username,serverName}},res)=>{
 //================================================================================================================================================================================
 //~~Notebook CRUD/Operations~
 //================================================================================================================================================================================
+app.post("/editTile",({body:{notebook,tile,user,code}},res)=>{
+  User.findOne({username:user}).exec((err,result)=>{
+    if(err){
+      res.send({message:"Error connecting to database, did not save."});
+    }else{
+      if(result){
+        // console.log(result);
+        result.notebooks.forEach((el,index)=>{
+          if(el.notebookName===notebook){
+            el.data.tiles.forEach((el,index)=>{
+              if(el.information.name===tile){
+                el.information.code=code
+              }
+            })
+          }
+        })
+        result.save();
+        res.send({message:"Found user"});
+      }else{
+        res.send({message:`No data found for ${user}.`})
+      }
+    }
+  })
+})
+app.post("/getTile",({body:{notebook,tile,user}},res)=>{
+  // console.log("received request from server to edit tile code in database.")
+  User.findOne({username:user}).exec((err,result)=>{
+    if(err){
+      res.send({message:"Error connecting to PyLot's database."})
+    }else{
+      if(result){
+        let code;
+        result.notebooks.forEach((el,index)=>{
+          if(el.notebookName===notebook){
+            el.data.tiles.forEach((el,index)=>{
+              // console.log(el.information.code)
+              if(el.information.name===tile){
+                // console.log(el.information.code)
+                code=el.information.code;
+              }
+            })
+          }
+        })
+        res.send({message:code})
+      }else{
+        res.send({message:`No data found for ${user}.`})
+      }
+    }
+  })
+  // res.send({message:"#Loaded Tile data from database."});
+})
 app.post("/loadNotebook",({body:{notebook,user}},res)=>{
-  console.log(`Requested ${user}'s notebook: ${notebook}`);
+  // console.log(`Requested ${user}'s notebook: ${notebook}`);
   User.findOne({username:user}).exec((err,result)=>{
     if(err){
       res.send({message:"Database connection error.",data:{}})
@@ -336,16 +387,14 @@ app.post("/loadNotebook",({body:{notebook,user}},res)=>{
       if(result){
         let targetIndex=null;
         for(let i=0;i<result.notebooks.length;i++){
-          // console.log(notebook)
-          // console.log(result.notebooks[i].data.name)
           if(result.notebooks[i].notebookName==notebook){
             targetIndex = i;
           }
-          console.log(result.notebooks[i].notebookName)
-          console.log(notebook);
-          console.log(notebook ===result.notebooks[i].notebookName)
+          // console.log(result.notebooks[i].notebookName)
+          // console.log(notebook);
+          // console.log(notebook ===result.notebooks[i].notebookName)
         }
-        console.log(targetIndex)
+        // console.log(targetIndex)
         //get rid of these console.logs later.
         if(targetIndex===null){
           res.send({message:"Notebook not found.",data:{}})

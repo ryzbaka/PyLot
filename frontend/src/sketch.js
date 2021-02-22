@@ -1,4 +1,5 @@
 import axios from "axios";
+import {navigate} from "@reach/router";
 
 const sketch = (p) => {
   let current = "None";
@@ -6,6 +7,7 @@ const sketch = (p) => {
   const removeTileButton = document.querySelector("#remove-tile-button");
   const bindButton = document.querySelector("#bind-button");
   const saveNotebookButton = document.querySelector("#save-notebook");
+  const editTileButton = document.querySelector("#edit-tile-code");
   let noteBook;
   let canvasWidth = p.windowWidth / 1.15;
   let canvasHeight = p.windowHeight / 1.35;
@@ -110,10 +112,20 @@ const sketch = (p) => {
       // localStorage.setItem("test","sketch set this value")
     }
 
+    editTileCode(name){
+      if(!name){
+        alert("Please enter a tile name.")
+      }else if(this.tileNames.includes(name)){
+        navigate(`/editor/${username}/${notebookName}/${name}`);
+      }else{
+        alert("Tile with that name does not exists.")
+      }
+    }
+
     addTile(name, canvasWidth, canvasHeight) {
       // console.log(name);
       if(!name){
-        console.log("No name added to tile.")
+        alert("No name added to tile.")
       }
       else if (this.tileNames.includes(name)) {
         alert("Tile already exists, cannot create tile.");
@@ -141,10 +153,18 @@ const sketch = (p) => {
         // const alreadyOutput = nodeTile.information.outputs
         //   .map((el) => el.information.name)
         //   .some((el) => el === outputTileName);
-        const alreadyOutput = nodeTile.information.outputTileNames
-                              .some(el=>outputTileName)
+        // const alreadyOutput = nodeTile.information.outputTileNames
+        //                       .some(el=>outputTileName)
+        let alreadyOutput=false;
+        for(let i=0;i<nodeTile.information.outputTileNames.length;i++){
+          if(nodeTile.information.outputTileNames[i]===outputTileName){
+            alreadyOutput = true;
+          }
+        }
+        console.log(alreadyOutput);
         if (alreadyOutput) {
           alert("Tiles already bound.");
+          console.log(nodeTile.information.outputTileNames)
         } else {
           nodeTile.addOutput(outputTile);
           outputTile.addInput(nodeTile);
@@ -168,6 +188,10 @@ const sketch = (p) => {
       });
     }
   }
+  editTileButton.addEventListener("click", () => {
+    const name = prompt("Enter name of new tile:");
+    noteBook.editTileCode(name);
+  });
   addTileButton.addEventListener("click", () => {
     const name = prompt("Enter name of new tile:");
     noteBook.addTile(name, canvasWidth, canvasHeight);

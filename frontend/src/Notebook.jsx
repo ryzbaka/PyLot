@@ -9,11 +9,10 @@ class Notebook extends Component{
         username:this.props.username,
         notebookName:this.props.notebookName
     }
-    editTileHandler(){
-        alert("Under development.")
-        //this handler has to relocate to a text editor where user can edit code
-        //inside a tile.
-    }
+    // editTileHandler(){
+    //     alert("Under development.")
+    //     const tileName = 
+    // }
     render(){
         const username = this.state.username;
         const notebookName = this.state.notebookName;
@@ -25,7 +24,8 @@ class Notebook extends Component{
                 <button id="remove-tile-button">Remove tile</button>
                 <button id="bind-button">Bind Tiles</button>
                 <button id="save-notebook">Save Notebook</button>
-                <button id="edit-tile-code" onClick={this.editTileHandler}>Edit Tile Code</button>
+                {/* <button id="edit-tile-code" onClick={this.editTileHandler}>Edit Tile Code</button> */}
+                <button id="edit-tile-code">Edit Tile Code</button>
                 </div>
                 <P5Wrapper sketch={sketch} ></P5Wrapper>
                 <div className="tile-info">

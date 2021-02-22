@@ -10,7 +10,7 @@ Feature Roadmap:
 * Server health monitor. (deployed to production ✔)
 * Web Terminal that connects to your servers. (deployed to production ✔)
 * PyLot Notebook interface (currently in development ✔)
-* Python text editor (currently in development 💻)
+* Python text editor (currently in development ✔)
 * Python remote code execution engine
 * Pipeline scheduler 
 * Community developed templates for common ETL tasks
