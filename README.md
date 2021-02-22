@@ -9,9 +9,9 @@ whenever you please while also keeping track of your servers, which you can acce
 Feature Roadmap:
 * Server health monitor. (deployed to production ✔)
 * Web Terminal that connects to your servers. (deployed to production ✔)
-* PyLot Notebook interface (currently in development ✔)
-* Python text editor (currently in development ✔)
-* Python remote code execution engine
+* PyLot Notebook interface (deployed to production ✔)
+* Python text editor (deployed to production ✔)
+* Python remote code execution engine (currently in development 💻)
 * Pipeline scheduler 
 * Community developed templates for common ETL tasks
 * Electron application
