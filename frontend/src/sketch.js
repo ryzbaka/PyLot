@@ -1,5 +1,5 @@
 import axios from "axios";
-import {navigate} from "@reach/router";
+import { navigate } from "@reach/router";
 
 const sketch = (p) => {
   let current = "None";
@@ -12,8 +12,12 @@ const sketch = (p) => {
   let canvasWidth = p.windowWidth / 1.15;
   let canvasHeight = p.windowHeight / 1.35;
 
-  const notebookName = window.location.href.split("/")[window.location.href.split("/").length-1];
-  const username = window.location.href.split("/")[window.location.href.split("/").length-2];
+  const notebookName = window.location.href.split("/")[
+    window.location.href.split("/").length - 1
+  ];
+  const username = window.location.href.split("/")[
+    window.location.href.split("/").length - 2
+  ];
 
   class Tile {
     constructor(name, canvasWidth, canvasHeight) {
@@ -27,8 +31,8 @@ const sketch = (p) => {
         tileHeight: canvasHeight / 10,
         // outputs: [],
         // inputs: [],
-        outputTileNames:[],
-        inputTileNames:[],
+        outputTileNames: [],
+        inputTileNames: [],
         code: "",
       };
     }
@@ -72,7 +76,7 @@ const sketch = (p) => {
         canvasHeight,
         tileWidth,
         tileHeight,
-        outputTileNames
+        outputTileNames,
       } = this.information;
       p.rectMode(p.CENTER);
       p.fill("#42f5bf"); //teal fill for tile
@@ -83,23 +87,23 @@ const sketch = (p) => {
       p.point(xPos, yPos);
       const { outputs } = this.information;
       p.stroke("white");
-      
-      if(outputTileNames.length > 0){
+
+      if (outputTileNames.length > 0) {
         // console.log(noteBook);
-        outputTileNames.forEach((outputTileName,index)=>{
+        outputTileNames.forEach((outputTileName, index) => {
           let outputTile;
-          for(let i=0;i<noteBook.tiles.length;i++){
-            if(noteBook.tiles[i].information.name===outputTileName){
+          for (let i = 0; i < noteBook.tiles.length; i++) {
+            if (noteBook.tiles[i].information.name === outputTileName) {
               outputTile = noteBook.tiles[i];
             }
           }
           p.line(
-           xPos+tileWidth/2,
-           yPos,
-           outputTile.information.xPos - tileWidth/2,
-           outputTile.information.yPos 
+            xPos + tileWidth / 2,
+            yPos,
+            outputTile.information.xPos - tileWidth / 2,
+            outputTile.information.yPos
           );
-        })
+        });
       }
     }
   }
@@ -112,22 +116,21 @@ const sketch = (p) => {
       // localStorage.setItem("test","sketch set this value")
     }
 
-    editTileCode(name){
-      if(!name){
-        alert("Please enter a tile name.")
-      }else if(this.tileNames.includes(name)){
+    editTileCode(name) {
+      if (!name) {
+        alert("Please enter a tile name.");
+      } else if (this.tileNames.includes(name)) {
         navigate(`/editor/${username}/${notebookName}/${name}`);
-      }else{
-        alert("Tile with that name does not exists.")
+      } else {
+        alert("Tile with that name does not exists.");
       }
     }
 
     addTile(name, canvasWidth, canvasHeight) {
       // console.log(name);
-      if(!name){
-        alert("No name added to tile.")
-      }
-      else if (this.tileNames.includes(name)) {
+      if (!name) {
+        alert("No name added to tile.");
+      } else if (this.tileNames.includes(name)) {
         alert("Tile already exists, cannot create tile.");
       } else {
         const newTile = new Tile(name, canvasWidth, canvasHeight);
@@ -155,16 +158,16 @@ const sketch = (p) => {
         //   .some((el) => el === outputTileName);
         // const alreadyOutput = nodeTile.information.outputTileNames
         //                       .some(el=>outputTileName)
-        let alreadyOutput=false;
-        for(let i=0;i<nodeTile.information.outputTileNames.length;i++){
-          if(nodeTile.information.outputTileNames[i]===outputTileName){
+        let alreadyOutput = false;
+        for (let i = 0; i < nodeTile.information.outputTileNames.length; i++) {
+          if (nodeTile.information.outputTileNames[i] === outputTileName) {
             alreadyOutput = true;
           }
         }
         console.log(alreadyOutput);
         if (alreadyOutput) {
           alert("Tiles already bound.");
-          console.log(nodeTile.information.outputTileNames)
+          console.log(nodeTile.information.outputTileNames);
         } else {
           nodeTile.addOutput(outputTile);
           outputTile.addInput(nodeTile);
@@ -179,12 +182,12 @@ const sketch = (p) => {
       this.tiles.forEach((tile, index) => {
         tile.information.outputTileNames = tile.information.outputTileNames.filter(
           // (el) => el.information.name !== tileName
-          (el)=>el!==tileName
+          (el) => el !== tileName
         );
         tile.information.inputTileNames = tile.information.inputTileNames.filter(
           // (el) => el.information.name !== tileName
-          (el)=>el!==tileName
-          );
+          (el) => el !== tileName
+        );
       });
     }
   }
@@ -214,63 +217,78 @@ const sketch = (p) => {
   });
   saveNotebookButton.addEventListener("click", () => {
     while (noteBook.name === "Untitled-Notebook" || noteBook.name == null) {
-      const newName = window.location.href.split("/")[window.location.href.split("/").length-1];
-      noteBook.name = newName; 
+      const newName = window.location.href.split("/")[
+        window.location.href.split("/").length - 1
+      ];
+      noteBook.name = newName;
     }
-    const username = window.location.href.split("/")[window.location.href.split("/").length-2];
-    axios.post("/users/test",{notebook:noteBook,user:username})
-    .then(({data:{message}})=>console.log(message));
+    const username = window.location.href.split("/")[
+      window.location.href.split("/").length - 2
+    ];
+    axios
+      .post("/users/test", { notebook: noteBook, user: username })
+      .then(({ data: { message } }) => console.log(message));
     //This function is where all the communication with server takes place.
     console.log(noteBook);
   });
   let loadNotebook;
-  p.preload = ()=>{
-    axios.post("/loadNotebook",{notebook:notebookName,user:username}).then(({data:{message,data}})=>{
-      if(message==="Database connection error." || message==="Username not found." || message==="Notebook not found."){
-        alert(message);
-        loadNotebook = false;
-      }else{
-        // console.log("data");
-        // console.log(data);
-        const notebookName = data.name;
-        const notebookTileNames = data.tileNames;
-        const notebookTiles = [];
-        if(notebookTileNames.length===0){
-          console.log("Empty notebook, no data to load.")
+  p.preload = () => {
+    axios
+      .post("/loadNotebook", { notebook: notebookName, user: username })
+      .then(({ data: { message, data } }) => {
+        if (
+          message === "Database connection error." ||
+          message === "Username not found." ||
+          message === "Notebook not found."
+        ) {
+          alert(message);
           loadNotebook = false;
-        }else{
-          //POPULATING A NOTEBOOK OBJECT.
-          // console.log(data.tiles);
-          for(let i=0;i<data.tiles.length;i++){
-            // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            // console.log(data.tiles[i].information);
-            const tileInfo = data.tiles[i].information;
-            const newTile = new Tile(tileInfo.name,tileInfo.canvasWidth,tileInfo.canvasHeight);
-            newTile.information.code = tileInfo.code;
-            newTile.information.inputTileNames = tileInfo.inputTileNames;
-            newTile.information.outputTileNames = tileInfo.outputTileNames;
-            newTile.information.tileHeight = tileInfo.tileHeight;
-            newTile.information.tileWidth = tileInfo.tileWidth;
-            newTile.information.xPos = tileInfo.xPos;
-            newTile.information.yPos = tileInfo.yPos;
-            // console.log(newTile);
-            // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            notebookTiles.push(newTile);
+        } else {
+          // console.log("data");
+          // console.log(data);
+          const notebookName = data.name;
+          const notebookTileNames = data.tileNames;
+          const notebookTiles = [];
+          if (notebookTileNames.length === 0) {
+            console.log("Empty notebook, no data to load.");
+            loadNotebook = false;
+          } else {
+            //POPULATING A NOTEBOOK OBJECT.
+            // console.log(data.tiles);
+            for (let i = 0; i < data.tiles.length; i++) {
+              // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+              // console.log(data.tiles[i].information);
+              const tileInfo = data.tiles[i].information;
+              const newTile = new Tile(
+                tileInfo.name,
+                tileInfo.canvasWidth,
+                tileInfo.canvasHeight
+              );
+              newTile.information.code = tileInfo.code;
+              newTile.information.inputTileNames = tileInfo.inputTileNames;
+              newTile.information.outputTileNames = tileInfo.outputTileNames;
+              newTile.information.tileHeight = tileInfo.tileHeight;
+              newTile.information.tileWidth = tileInfo.tileWidth;
+              newTile.information.xPos = tileInfo.xPos;
+              newTile.information.yPos = tileInfo.yPos;
+              // console.log(newTile);
+              // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+              notebookTiles.push(newTile);
+            }
+            // console.log(notebookTiles);
+            noteBook = new Notebook();
+            noteBook.name = notebookName;
+            noteBook.tileNames = notebookTileNames;
+            noteBook.tiles = notebookTiles;
+            loadNotebook = true;
           }
-          // console.log(notebookTiles);
-          noteBook = new Notebook();
-          noteBook.name = notebookName;
-          noteBook.tileNames = notebookTileNames;
-          noteBook.tiles = notebookTiles;
-          loadNotebook=true;         
         }
-      }
-    });  
-  }
+      });
+  };
   p.setup = () => {
     p.createCanvas(canvasWidth, canvasHeight);
     p.background("grey");
-    if(!loadNotebook){
+    if (!loadNotebook) {
       noteBook = new Notebook();
     }
   };

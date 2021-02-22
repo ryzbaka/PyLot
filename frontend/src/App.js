@@ -13,9 +13,9 @@ import SocketApi from "./Api.jsx";
 import Notebook from "./Notebook.jsx";
 import Terminal from "./Terminal.jsx";
 import Editor from "./Editor";
-import NotebooksDisplay from "./NotebooksDisplay"
+import NotebooksDisplay from "./NotebooksDisplay";
 import AddNotebook from "./AddNotebook.js";
-import DeleteNotebook from "./DeleteNotebook.js"
+import DeleteNotebook from "./DeleteNotebook.js";
 
 const App = () => {
   const signedStateHook = useState(["Signed Out", "None", "None"]); //maybe add a dictionary similar to the one in SignInContext.js
@@ -46,9 +46,13 @@ const App = () => {
               <Sidebar options={["Home"]} links={["/"]} path="/addServer" />
               <Sidebar options={["Home"]} links={["/"]} path="/notebook" />
               <Sidebar options={["Home"]} links={["/"]} path="/terminal/*" />
-              <Sidebar options={["Home"]} links={["/"]} path="/notebooks/*"/>
+              <Sidebar options={["Home"]} links={["/"]} path="/notebooks/*" />
               <Sidebar options={["Home"]} links={["/"]} path="/addNotebook" />
-              <Sidebar options={["Home"]} links={["/"]} path="/deleteNotebook" />
+              <Sidebar
+                options={["Home"]}
+                links={["/"]}
+                path="/deleteNotebook"
+              />
               <Sidebar options={["Home"]} links={["/"]} path="/editor/*" />
             </Router>
           </div>
@@ -65,8 +69,8 @@ const App = () => {
               <Notebook path="/notebooks/:username/:notebookName" />
               <Terminal path="/terminal/:username/:serverName" />
               {/* <Editor path="/editor/"/> */}
-              <Editor path="/editor/:username/:notebook/:tile"/>
-              <NotebooksDisplay path="/notebooks/:username"/>
+              <Editor path="/editor/:username/:notebook/:tile" />
+              <NotebooksDisplay path="/notebooks/:username" />
               <AddNotebook path="/addNotebook" />
               <DeleteNotebook path="/deleteNotebook" />
             </Router>

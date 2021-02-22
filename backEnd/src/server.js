@@ -299,95 +299,95 @@ app.post(
 );
 //================================================================================================================================================================================
 //================================================================================================================================================================================
-app.post("/getIp",({body:{username,serverName}},res)=>{
-  User.findOne({username:username}).exec((err,result)=>{
-    if(err){
-      res.json({message:err})
-    }else{
-      if(result){
-        const {servers}=result;
-        let found="";
-        for(let i=0;i<servers.length;i++){
+app.post("/getIp", ({ body: { username, serverName } }, res) => {
+  User.findOne({ username: username }).exec((err, result) => {
+    if (err) {
+      res.json({ message: err });
+    } else {
+      if (result) {
+        const { servers } = result;
+        let found = "";
+        for (let i = 0; i < servers.length; i++) {
           const sName = servers[i].serverName;
-          if(sName===serverName){
-            found = servers[i].ipAddr
+          if (sName === serverName) {
+            found = servers[i].ipAddr;
           }
         }
-        if(found===""){
-          res.json({message:"Server with that name not found."});
-        }else{
+        if (found === "") {
+          res.json({ message: "Server with that name not found." });
+        } else {
           res.send(found);
         }
-      }else{
-        res.json({message:"User does not exist."})
+      } else {
+        res.json({ message: "User does not exist." });
       }
     }
   });
-})
+});
 //================================================================================================================================================================================
 //~~Notebook CRUD/Operations~
 //================================================================================================================================================================================
-app.post("/editTile",({body:{notebook,tile,user,code}},res)=>{
-  User.findOne({username:user}).exec((err,result)=>{
-    if(err){
-      res.send({message:"Error connecting to database, did not save."});
-    }else{
-      if(result){
+app.post("/editTile", ({ body: { notebook, tile, user, code } }, res) => {
+  User.findOne({ username: user }).exec((err, result) => {
+    if (err) {
+      res.send({ message: "Error connecting to database, did not save." });
+    } else {
+      if (result) {
         // console.log(result);
-        result.notebooks.forEach((el,index)=>{
-          if(el.notebookName===notebook){
-            el.data.tiles.forEach((el,index)=>{
-              if(el.information.name===tile){
-                el.information.code=code
+        result.notebooks.forEach((el, index) => {
+          if (el.notebookName === notebook) {
+            el.data.tiles.forEach((el, index) => {
+              if (el.information.name === tile) {
+                el.information.code = code;
               }
-            })
+            });
           }
-        })
+        });
         result.save();
-        res.send({message:"Found user"});
-      }else{
-        res.send({message:`No data found for ${user}.`})
+        res.send({ message: "Found user" });
+      } else {
+        res.send({ message: `No data found for ${user}.` });
       }
     }
-  })
-})
-app.post("/getTile",({body:{notebook,tile,user}},res)=>{
+  });
+});
+app.post("/getTile", ({ body: { notebook, tile, user } }, res) => {
   // console.log("received request from server to edit tile code in database.")
-  User.findOne({username:user}).exec((err,result)=>{
-    if(err){
-      res.send({message:"Error connecting to PyLot's database."})
-    }else{
-      if(result){
+  User.findOne({ username: user }).exec((err, result) => {
+    if (err) {
+      res.send({ message: "Error connecting to PyLot's database." });
+    } else {
+      if (result) {
         let code;
-        result.notebooks.forEach((el,index)=>{
-          if(el.notebookName===notebook){
-            el.data.tiles.forEach((el,index)=>{
+        result.notebooks.forEach((el, index) => {
+          if (el.notebookName === notebook) {
+            el.data.tiles.forEach((el, index) => {
               // console.log(el.information.code)
-              if(el.information.name===tile){
+              if (el.information.name === tile) {
                 // console.log(el.information.code)
-                code=el.information.code;
+                code = el.information.code;
               }
-            })
+            });
           }
-        })
-        res.send({message:code})
-      }else{
-        res.send({message:`No data found for ${user}.`})
+        });
+        res.send({ message: code });
+      } else {
+        res.send({ message: `No data found for ${user}.` });
       }
     }
-  })
+  });
   // res.send({message:"#Loaded Tile data from database."});
-})
-app.post("/loadNotebook",({body:{notebook,user}},res)=>{
+});
+app.post("/loadNotebook", ({ body: { notebook, user } }, res) => {
   // console.log(`Requested ${user}'s notebook: ${notebook}`);
-  User.findOne({username:user}).exec((err,result)=>{
-    if(err){
-      res.send({message:"Database connection error.",data:{}})
-    }else{
-      if(result){
-        let targetIndex=null;
-        for(let i=0;i<result.notebooks.length;i++){
-          if(result.notebooks[i].notebookName==notebook){
+  User.findOne({ username: user }).exec((err, result) => {
+    if (err) {
+      res.send({ message: "Database connection error.", data: {} });
+    } else {
+      if (result) {
+        let targetIndex = null;
+        for (let i = 0; i < result.notebooks.length; i++) {
+          if (result.notebooks[i].notebookName == notebook) {
             targetIndex = i;
           }
           // console.log(result.notebooks[i].notebookName)
@@ -396,125 +396,125 @@ app.post("/loadNotebook",({body:{notebook,user}},res)=>{
         }
         // console.log(targetIndex)
         //get rid of these console.logs later.
-        if(targetIndex===null){
-          res.send({message:"Notebook not found.",data:{}})
-        }else{
-          res.send(
-            {
-              message:"Notebook found.",
-              data:result.notebooks[targetIndex].data
-            }
-          )
+        if (targetIndex === null) {
+          res.send({ message: "Notebook not found.", data: {} });
+        } else {
+          res.send({
+            message: "Notebook found.",
+            data: result.notebooks[targetIndex].data,
+          });
         }
-      }else{
-        res.send({message:"Username not found.",data:{}})
+      } else {
+        res.send({ message: "Username not found.", data: {} });
       }
     }
-  })
-})
-app.post("/users/test",({body:{notebook,user}},res)=>{ //rename this to /saveNotebook.
+  });
+});
+app.post("/users/test", ({ body: { notebook, user } }, res) => {
+  //rename this to /saveNotebook.
   //this saves a notebook DAG to MongoDB.
-  User.findOne({username:user}).exec((err,result)=>{
-    if(err){
-      res.send({message:"error connecting to PyLot database."})
-    }else{
-      if(result){
-        for(let i=0;i<result.notebooks.length;i++){
-          if(result.notebooks[i].notebookName==notebook.name){
+  User.findOne({ username: user }).exec((err, result) => {
+    if (err) {
+      res.send({ message: "error connecting to PyLot database." });
+    } else {
+      if (result) {
+        for (let i = 0; i < result.notebooks.length; i++) {
+          if (result.notebooks[i].notebookName == notebook.name) {
             result.notebooks[i].data = notebook;
           }
         }
-        console.log(result)
+        console.log(result);
         result.save();
-        res.send({message:"Found user with that notebook."})
-      }else{
-        res.send({message:"That username does not exist."})
+        res.send({ message: "Found user with that notebook." });
+      } else {
+        res.send({ message: "That username does not exist." });
       }
     }
-  })
-})
+  });
+});
 
-app.post("/addNotebook",({body:{username,name}},res)=>{
-  User.findOne({username:username}).exec((err,result)=>{
-    if(err){
-      res.json({message:"Query error."})
-    }
-    else{
-      if(result){
-        const {notebooks} = result;
-        const notebookObject ={
-          notebookName:name,
-          createdOn:new Date().toString()
-        }
-        const alreadyExists = notebooks.map(({notebookName})=>notebookName===name).some(el=>el);
-        if(alreadyExists){
-          res.json({message:"Notebook with that name already exists."})
-        }else{
+app.post("/addNotebook", ({ body: { username, name } }, res) => {
+  User.findOne({ username: username }).exec((err, result) => {
+    if (err) {
+      res.json({ message: "Query error." });
+    } else {
+      if (result) {
+        const { notebooks } = result;
+        const notebookObject = {
+          notebookName: name,
+          createdOn: new Date().toString(),
+        };
+        const alreadyExists = notebooks
+          .map(({ notebookName }) => notebookName === name)
+          .some((el) => el);
+        if (alreadyExists) {
+          res.json({ message: "Notebook with that name already exists." });
+        } else {
           result.notebooks.push(notebookObject);
           // console.log(result);
           result.save();
-          res.json({message:`Added notebook with name ${name}`});
+          res.json({ message: `Added notebook with name ${name}` });
         }
-      }else{
-        res.json({message:"Invalid username."})
+      } else {
+        res.json({ message: "Invalid username." });
       }
     }
-  })
-})
-app.post("/getNotebooks",({body:{username}},res)=>{
-  User.findOne({username:username}).exec((err,result)=>{
-    if(err){
-      res.json({message:"Query error."})
-    }else{
-      if(result){
-        res.json({notebooks:result.notebooks})
-      }else{
-        res.json({message:"Invalid username."})
+  });
+});
+app.post("/getNotebooks", ({ body: { username } }, res) => {
+  User.findOne({ username: username }).exec((err, result) => {
+    if (err) {
+      res.json({ message: "Query error." });
+    } else {
+      if (result) {
+        res.json({ notebooks: result.notebooks });
+      } else {
+        res.json({ message: "Invalid username." });
       }
     }
-  })
-})
-app.post("/deleteNotebook",({body:{username,name}},res)=>{
+  });
+});
+app.post("/deleteNotebook", ({ body: { username, name } }, res) => {
   //backend working fine.
   //test frontend.
-  User.findOne({username:username}).exec((err,resultant)=>{
-    if(err){
-      res.send({message:"Database error."})
-    }else{
-      if(resultant){
-        let targetIndex=null;
-        for(let i=0;i<resultant.notebooks.length;i++){
+  User.findOne({ username: username }).exec((err, resultant) => {
+    if (err) {
+      res.send({ message: "Database error." });
+    } else {
+      if (resultant) {
+        let targetIndex = null;
+        for (let i = 0; i < resultant.notebooks.length; i++) {
           // console.log(resultant.notebooks[i].notebookName+" "+name);
-          if(resultant.notebooks[i].notebookName===name){
+          if (resultant.notebooks[i].notebookName === name) {
             targetIndex = i;
-          }  
+          }
         }
-        if(targetIndex!=null){
-        resultant.notebooks.splice(targetIndex,1);
-        resultant.save();
-        res.send({message:`Deleted ${username}'s notebook : ${name}`})
-        }else{
-          res.send({message:"Notebook with that name does not exist"})
+        if (targetIndex != null) {
+          resultant.notebooks.splice(targetIndex, 1);
+          resultant.save();
+          res.send({ message: `Deleted ${username}'s notebook : ${name}` });
+        } else {
+          res.send({ message: "Notebook with that name does not exist" });
         }
-      }else{
-        res.send({message:"That username does not exist"})
+      } else {
+        res.send({ message: "That username does not exist" });
       }
     }
-  })
-})
-app.post('/deleteAllNotebooks',({body:{username}},res)=>{
-  User.findOne({username:username}).exec((err,result)=>{
-    if(err){
-      res.json({message:"Query Error"});  
-    }else if(result){
-      result.notebooks=[]
+  });
+});
+app.post("/deleteAllNotebooks", ({ body: { username } }, res) => {
+  User.findOne({ username: username }).exec((err, result) => {
+    if (err) {
+      res.json({ message: "Query Error" });
+    } else if (result) {
+      result.notebooks = [];
       result.save();
-      res.json({message:"Deleted all notebooks."})
-    }else{
-      res.json({message:"Invalid username."})
+      res.json({ message: "Deleted all notebooks." });
+    } else {
+      res.json({ message: "Invalid username." });
     }
-  })
-})
+  });
+});
 //================================================================================================================================================================================
 //~End of notebook CRUD/Operations
 //================================================================================================================================================================================
