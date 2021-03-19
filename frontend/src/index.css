@@ -105,6 +105,9 @@ div .server-container{
 .notebook-container button{
   max-width: 30%;
 }
+.notebook-buttons-container{
+  width:100%;
+}
 .banner-container{
   display:flex;
   justify-content: center;
@@ -139,4 +142,8 @@ div .server-container{
   display:flex;
   justify-content:center;
   align-items:center;
+}
+.connection-status-display{
+  width:40%;
+  height:30%;
 }

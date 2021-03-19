@@ -22,7 +22,8 @@ const DeleteNotebook = () => {
       .post("/deleteNotebook", formData)
       .then(({ data: { message } }) => console.log(message));
     console.log(formData);
-    navigate(`/notebooks/${context[1]}`);
+    // navigate(`/notebooks/${context[1]}`);
+    navigate(`/`);
   }
   return (
     <div className="form-container">

@@ -20,7 +20,7 @@ class Editor extends Component{
         codeText = value;
     }
     saveCode(){
-        axios.post("/editTile",{
+        axios.post("/editTileCode",{
             notebook:window.location.href.split("/")[window.location.href.split("/").length-2],
             tile:window.location.href.split("/")[window.location.href.split("/").length-1],
             user:window.location.href.split("/")[window.location.href.split("/").length-3],
@@ -48,7 +48,7 @@ class Editor extends Component{
         return(
             <div className="editor-space">
                 <h5>Code Editor</h5>
-                <button onClick = {this.saveCode} id="save-notebook">Save Notebook</button>
+                <button onClick = {this.saveCode} id="save-notebook">Save Code</button>
                 <button onClick = {this.backToNotebook} id="save-notebook">Back</button>
                 <AceEditor
                     keyboardHandler="vscode"

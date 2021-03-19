@@ -1,5 +1,6 @@
 import axios from "axios";
 import { navigate } from "@reach/router";
+import openConnection from "socket.io-client";
 
 const sketch = (p) => {
   let current = "None";
@@ -11,7 +12,18 @@ const sketch = (p) => {
   let noteBook;
   let canvasWidth = p.windowWidth / 1.15;
   let canvasHeight = p.windowHeight / 1.35;
-
+  
+  let socket="No socket";
+  axios.post("/getIp",{
+    username:"testpilot",
+    serverName:"Local Test Server"
+  }).then(({data})=>{
+    const ip = data;
+    socket = openConnection(`http://${ip}:5000/`);
+    socket.on("connect",()=>console.log("sketch socket connected to runtime"));
+    socket.on("disconnect",()=>console.log("sketch socket disconnected from runtime"));
+  })
+  
   const notebookName = window.location.href.split("/")[
     window.location.href.split("/").length - 1
   ];
@@ -120,6 +132,7 @@ const sketch = (p) => {
       if (!name) {
         alert("Please enter a tile name.");
       } else if (this.tileNames.includes(name)) {
+        saveNotebookButton.click();//save notebook before editing tile code.
         navigate(`/editor/${username}/${notebookName}/${name}`);
       } else {
         alert("Tile with that name does not exists.");
@@ -136,6 +149,7 @@ const sketch = (p) => {
         const newTile = new Tile(name, canvasWidth, canvasHeight);
         this.tiles.push(newTile);
         this.tileNames.push(name);
+        saveNotebookButton.click();
       }
     }
 
@@ -153,11 +167,6 @@ const sketch = (p) => {
       } else {
         const nodeTile = this.tiles[nodeIndex];
         const outputTile = this.tiles[outputTileIndex];
-        // const alreadyOutput = nodeTile.information.outputs
-        //   .map((el) => el.information.name)
-        //   .some((el) => el === outputTileName);
-        // const alreadyOutput = nodeTile.information.outputTileNames
-        //                       .some(el=>outputTileName)
         let alreadyOutput = false;
         for (let i = 0; i < nodeTile.information.outputTileNames.length; i++) {
           if (nodeTile.information.outputTileNames[i] === outputTileName) {
@@ -189,6 +198,7 @@ const sketch = (p) => {
           (el) => el !== tileName
         );
       });
+      saveNotebookButton.click();
     }
   }
   editTileButton.addEventListener("click", () => {
@@ -213,9 +223,12 @@ const sketch = (p) => {
       alert("One of the two tile names entered does not exist.");
     } else {
       noteBook.bind(tile1, tile2);
+      saveNotebookButton.click();
     }
   });
   saveNotebookButton.addEventListener("click", () => {
+    // console.log(socket) write code here to send notebook object to the runtime.js file 
+    // socket.emit("test-sketch-socket",{message:"hello from sketch"})
     while (noteBook.name === "Untitled-Notebook" || noteBook.name == null) {
       const newName = window.location.href.split("/")[
         window.location.href.split("/").length - 1
@@ -229,7 +242,8 @@ const sketch = (p) => {
       .post("/users/test", { notebook: noteBook, user: username })
       .then(({ data: { message } }) => console.log(message));
     //This function is where all the communication with server takes place.
-    console.log(noteBook);
+    // console.log(noteBook);
+    socket.emit("test-sketch-socket",{ notebook: noteBook, user: username })
   });
   let loadNotebook;
   p.preload = () => {

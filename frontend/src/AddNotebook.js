@@ -19,7 +19,8 @@ const AddNotebook = () => {
       alert("please enter a name.");
     }
     axios.post("/addNotebook", formData); //.then(({data:{message}})=>alert(message));
-    navigate(`/notebooks/${context[1]}`);
+    // navigate(`/notebooks/${context[1]}`);
+    navigate("/")
   }
   return (
     <div className="form-container">

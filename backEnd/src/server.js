@@ -327,7 +327,8 @@ app.post("/getIp", ({ body: { username, serverName } }, res) => {
 //================================================================================================================================================================================
 //~~Notebook CRUD/Operations~
 //================================================================================================================================================================================
-app.post("/editTile", ({ body: { notebook, tile, user, code } }, res) => {
+
+app.post("/editTileCode", ({ body: { notebook, tile, user, code } }, res) => {
   User.findOne({ username: user }).exec((err, result) => {
     if (err) {
       res.send({ message: "Error connecting to database, did not save." });
@@ -351,6 +352,7 @@ app.post("/editTile", ({ body: { notebook, tile, user, code } }, res) => {
     }
   });
 });
+
 app.post("/getTile", ({ body: { notebook, tile, user } }, res) => {
   // console.log("received request from server to edit tile code in database.")
   User.findOne({ username: user }).exec((err, result) => {
