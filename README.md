@@ -6,8 +6,8 @@ Writing code for data processing in Jupyter nodebooks is the standard for most P
 to spend hours converting your data ETL pipeline from a Jupyter notebook to production code that you can schedule to run
 whenever you please while also keeping track of your servers, which you can access using PyLot's web terminal.
 
-[PyLot Runtime](https://github.com/ryzbaka/PyLotHealthReportingServicePayload)
-[PyLot Code Execution Engine](https://github.com/ryzbaka/PyLotCodeExecutionEngine)
+* [PyLot Runtime](https://github.com/ryzbaka/PyLotHealthReportingServicePayload)
+* [PyLot Code Execution Engine](https://github.com/ryzbaka/PyLotCodeExecutionEngine)
 
 Feature Roadmap:
 * Server health monitor. (deployed to production ✔)
