@@ -25,7 +25,7 @@ class Profile extends Component{
         if(this.state.loading){
             return (
                 <div className="serverDetailsPageMainContainer">
-          <CircularProgress/>
+          <CircularProgress style={{color:"#42f5bf"}}/>
         </div>
             )
         }else{
