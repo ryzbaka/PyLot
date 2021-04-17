@@ -28,6 +28,3 @@ Feature Roadmap:
 ## Contributors 👨‍💻
 * [Hamza Ali Rizvi](https://github.com/ryzbaka) 🐱‍👤
 * [Mathew Pius](https://github.com/mathewpius19) 🐱‍🐉
-* [Arihant Chawla](https://github.com/ArihantChawla) 🐱‍👓
-* [Deekshant Hooda](https://github.com/dk-blackops) 🐱‍🚀
-* [Naman Gupta](https://github.com/ngnammu) 🐱‍💻
