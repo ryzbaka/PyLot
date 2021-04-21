@@ -78,6 +78,8 @@ class Notebook extends Component {
           >
             Back
           </button>
+          <button id="run-tile-code">Run Tile Code</button>
+          <button id="view-tile-output">View Tile Output</button>
           <div
             className="connection-status-display"
             style={{

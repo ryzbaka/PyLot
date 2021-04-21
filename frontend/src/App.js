@@ -16,6 +16,7 @@ import Editor from "./Editor";
 import NotebooksDisplay from "./NotebooksDisplay";
 import AddNotebook from "./AddNotebook.js";
 import DeleteNotebook from "./DeleteNotebook.js";
+import View from "./View"
 
 const App = () => {
   const signedStateHook = useState(["Signed Out", "None", "None"]); //maybe add a dictionary similar to the one in SignInContext.js
@@ -54,6 +55,7 @@ const App = () => {
                 path="/deleteNotebook"
               />
               <Sidebar options={["Home"]} links={["/"]} path="/editor/*" />
+              {/* <Sidebar options={["Home"]} links={["/notebooks"]} path="/view/*" /> */}
             </Router>
           </div>
           <div className="nested-main-container">
@@ -73,6 +75,7 @@ const App = () => {
               <NotebooksDisplay path="/notebooks/:username" />
               <AddNotebook path="/addNotebook" />
               <DeleteNotebook path="/deleteNotebook" />
+              <View path="/view/:username/:notebook/:tile"/>
             </Router>
           </div>
         </div>

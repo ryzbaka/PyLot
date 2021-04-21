@@ -9,6 +9,8 @@ const sketch = (p) => {
   const bindButton = document.querySelector("#bind-button");
   const saveNotebookButton = document.querySelector("#save-notebook");
   const editTileButton = document.querySelector("#edit-tile-code");
+  const runTileButton = document.querySelector("#run-tile-code");
+  const viewTileOutputButton = document.querySelector("#view-tile-output");
   let noteBook;
   let canvasWidth = p.windowWidth / 1.15;
   let canvasHeight = p.windowHeight / 1.35;
@@ -22,6 +24,14 @@ const sketch = (p) => {
     socket = openConnection(`http://${ip}:5000/`);
     socket.on("connect",()=>console.log("sketch socket connected to runtime"));
     socket.on("disconnect",()=>console.log("sketch socket disconnected from runtime"));
+    socket.on("ran-tile",(response)=>{
+      if(Object.keys(response).includes("error")){
+        alert(response.error)
+      }else{
+        console.log(response);
+        alert(`Executed tile code successfully.`)
+      }
+    });
   })
   
   const notebookName = window.location.href.split("/")[
@@ -127,7 +137,16 @@ const sketch = (p) => {
       this.tileNames = [];
       // localStorage.setItem("test","sketch set this value")
     }
-
+    viewTileCode(name){
+      if (!name) {
+        alert("Please enter a tile name.");
+      } else if (this.tileNames.includes(name)) {
+        saveNotebookButton.click();//save notebook before editing tile code.
+        navigate(`/view/${username}/${notebookName}/${name}`);
+      } else {
+        alert("Tile with that name does not exists.");
+      }
+    }
     editTileCode(name) {
       if (!name) {
         alert("Please enter a tile name.");
@@ -201,6 +220,10 @@ const sketch = (p) => {
       saveNotebookButton.click();
     }
   }
+  viewTileOutputButton.addEventListener("click",()=>{
+    const name = prompt("Enter name of tile you wish to view:");
+    noteBook.viewTileCode(name)
+  })
   editTileButton.addEventListener("click", () => {
     const name = prompt("Enter name of new tile:");
     noteBook.editTileCode(name);
@@ -245,6 +268,15 @@ const sketch = (p) => {
     // console.log(noteBook);
     socket.emit("test-sketch-socket",{ notebook: noteBook, user: username })
   });
+  runTileButton.addEventListener("click",()=>{
+    const tileName = prompt("Please enter tile name: ");
+    if(!noteBook.tileNames.includes(tileName)){
+      alert(`${tileName} not found in notebook: ${noteBook.name}`);
+    }else{
+      socket.emit("run-tile",{notebookName:noteBook.name,tileName:tileName})
+    }
+    //maybe add savebutton.click to save before running
+  })
   let loadNotebook;
   p.preload = () => {
     axios
