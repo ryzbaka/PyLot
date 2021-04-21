@@ -3,7 +3,13 @@ import axios from "axios";
 import {navigate} from "@reach/router"
 import CircularProgress from "@material-ui/core/CircularProgress";
 import openConnection from "socket.io-client";
-
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 class View extends Component{
     state = {
@@ -12,7 +18,9 @@ class View extends Component{
         tileName:window.location.href.split("/")[window.location.href.split("/").length-1],
         loadedData:false,
         socket : "No Socket",
-        data:"No data"
+        data:"No data",
+        columnNames:"None",
+        rows:"None"
     }
     componentDidMount(){
         if(this.state.socket=="No Socket"){
@@ -37,7 +45,19 @@ class View extends Component{
                             if(Object.keys(data).includes("error")){
                                 alert(data.error);
                             }else{
-                                this.setState({loadedData:true,data:data})
+                                const columnNames = Object.keys(data);
+                                console.log(columnNames);
+                                const rows = []
+                                columnNames.forEach((column,index)=>{
+                                    const keys = Object.keys(data[column]);
+                                    const row = [];
+                                    keys.forEach((el,index)=>{
+                                        row.push(data[column][el])
+                                    })
+                                    rows.push(row)
+                                });
+                                // console.log(rows)
+                                this.setState({loadedData:true,data:data,columnNames:columnNames,rows:rows})
                             }
                         })
                         this.state.socket.emit("fetch-data",{
@@ -60,11 +80,49 @@ class View extends Component{
                 <CircularProgress style={{color:"#42f5bf"}}/>
             )
         }else{
+            const columnNames = this.state.columnNames;
+            const array = this.state.rows;
+            const numColumns = array[0].length;
+            const numRows = array.length;
+            const newArray = []
+            for(let j=0;j<numColumns;j++){
+                const newRow=[]
+                for(let i=0;i<numRows;i++){
+                    newRow.push(array[i][j])
+                }
+                newArray.push(newRow);
+            }
+            console.log(array)
+            console.log(newArray)
             return(
                 <div className="container">
                     <h5>{this.state.tileName}</h5>
                     <button onClick={this.backToNotebook}>Back</button>
-                    <p>{JSON.stringify(this.state.data)}</p>
+                    {/* <p>{JSON.stringify(this.state.data)}</p> */}
+                    <TableContainer>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                   {columnNames.map((columnName,i)=>(
+                                       <TableCell key={i+"columnHead"}>{columnName}</TableCell>
+                                   ))} 
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {
+                                    newArray.map((row,i)=>(
+                                        <TableRow>
+                                            {row.map((value,index)=>(
+                                                <TableCell>
+                                                    {value}
+                                                </TableCell>
+                                            ))}
+                                        </TableRow>
+                                    ))
+                                }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </div>
             )
         }
