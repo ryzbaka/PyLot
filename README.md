@@ -14,10 +14,9 @@ Feature Roadmap:
 * Web Terminal that connects to your servers. (deployed to production ✔)
 * PyLot Notebook interface (deployed to production ✔)
 * Python text editor (deployed to production ✔)
-* Python remote code execution engine (currently in development 💻)
+* Python remote code execution engine (currently in development ✔)
 * Pipeline scheduler 
 * Community developed templates for common ETL tasks
-* Electron application
 ## Status
 * <strong>Currently in pre-alpha. ✈</strong>
 ## License ⚖
