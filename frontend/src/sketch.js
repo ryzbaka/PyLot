@@ -11,6 +11,8 @@ const sketch = (p) => {
   const editTileButton = document.querySelector("#edit-tile-code");
   const runTileButton = document.querySelector("#run-tile-code");
   const viewTileOutputButton = document.querySelector("#view-tile-output");
+  const scheduleDAGButton = document.querySelector("#schedule-dag-button");
+  const cancelDAGButton = document.querySelector("#cancel-job-button");
   let noteBook;
   let canvasWidth = p.windowWidth / 1.15;
   let canvasHeight = p.windowHeight / 1.35;
@@ -24,6 +26,10 @@ const sketch = (p) => {
     socket = openConnection(`http://${ip}:5000/`);
     socket.on("connect",()=>console.log("sketch socket connected to runtime"));
     socket.on("disconnect",()=>console.log("sketch socket disconnected from runtime"));
+    socket.on("scheduled-dag",({message})=>{
+      alert(message)
+    })
+    socket.on("cancelled-job",({message})=>alert(message))
     socket.on("ran-tile",(response)=>{
       if(Object.keys(response).includes("error")){
         alert(response.error)
@@ -220,6 +226,20 @@ const sketch = (p) => {
       saveNotebookButton.click();
     }
   }
+  cancelDAGButton.addEventListener("click",()=>{
+    // alert("Cancel DAG button not implemented.")
+    const nbName = window.location.href.split("/")[window.location.href.split("/").length-1];
+    socket.emit("cancel-job",{notebookName:nbName});
+  });
+  scheduleDAGButton.addEventListener("click",()=>{
+    const nbName = window.location.href.split("/")[window.location.href.split("/").length-1];
+    const minutes = parseInt(prompt("Minutes(?)"));
+    if(minutes===NaN){
+      alert("Invalid input for minutes")
+    }else{
+      socket.emit("schedule-dag",{notebookName:nbName,minutes:minutes});
+    }
+  });
   viewTileOutputButton.addEventListener("click",()=>{
     const name = prompt("Enter name of tile you wish to view:");
     noteBook.viewTileCode(name)

@@ -80,6 +80,8 @@ class Notebook extends Component {
           </button>
           <button id="run-tile-code">Run Tile Code</button>
           <button id="view-tile-output">View Tile Output</button>
+          <button id="schedule-dag-button">Schedule DAG</button>
+          <button id="cancel-job-button">Cancel DAG Execution</button>
           <div
             className="connection-status-display"
             style={{
