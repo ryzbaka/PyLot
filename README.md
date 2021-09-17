@@ -21,9 +21,6 @@ Feature Roadmap:
 * <strong>Currently in pre-alpha. ✈</strong>
 ## License ⚖
 * [MIT](https://github.com/ryzbaka/PyLot/blob/master/LICENSE)
-## Progress and Documentation ☘
-* [Trello Board](https://trello.com/b/9zQ3B1nt/pylot-major-project)
-* [Documentation](https://ryzbaka.github.io/PyLot/)
 ## Contributors 👨‍💻
 * [Hamza Ali Rizvi](https://github.com/ryzbaka) 🐱‍👤
 * [Mathew Pius](https://github.com/mathewpius19) 🐱‍🐉
