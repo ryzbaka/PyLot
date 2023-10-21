@@ -17,8 +17,6 @@ Feature Roadmap:
 * Python remote code execution engine (currently in development ✔)
 * Pipeline scheduler 
 * Community developed templates for common ETL tasks
-## Status
-* <strong>Currently in pre-alpha. ✈</strong>
 ## License ⚖
 * [MIT](https://github.com/ryzbaka/PyLot/blob/master/LICENSE)
 ## Contributors 👨‍💻
