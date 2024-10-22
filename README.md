@@ -22,3 +22,9 @@ Feature Roadmap:
 ## Contributors 👨‍💻
 * [Hamza Ali Rizvi](https://github.com/ryzbaka) 🐱‍👤
 * [Mathew Pius](https://github.com/mathewpius19) 🐱‍🐉
+
+![image](https://github.com/user-attachments/assets/62b23408-271a-4e08-9d68-e6ee43dc507f)
+![image](https://github.com/user-attachments/assets/b2398d89-7243-44ce-9af1-124694115bd9)
+![image](https://github.com/user-attachments/assets/04afabda-e95e-4140-83d9-a91ffcb273cd)
+
+
